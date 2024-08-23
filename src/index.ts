@@ -26,7 +26,7 @@ async () => {
     const { rows } = await client.query("Select current_user");
     const currentUser = rows[0]["current_user"];
     console.log(currentUser);
-  } catch {
+  } catch (err) {
     console.log(error);
   } finally {
     client.release();
