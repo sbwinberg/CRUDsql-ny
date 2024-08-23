@@ -1,9 +1,9 @@
 # CRUDsql
 
-npm init -y
-npm i express
-npm i dotenv
-npm i pg
+- npm init -y
+- npm i express
+- npm i dotenv
+- npm i pg
 
 ---
 
