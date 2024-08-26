@@ -1,8 +1,15 @@
 import { error } from "console";
 import express, { Response, Request, NextFunction } from "express";
-import { Pool, Client } from "pg";
+// import { Pool, Client } from "pg";
+
+import pool from "../db";
+
+import userRouter from "./carlos";
+// import dotenv from "dotenv";
 
 const app = express();
+app.use(express.json());
+app.use("/", userRouter);
 
 // interface poolConfig {
 //   user: string;
@@ -11,14 +18,6 @@ const app = express();
 //   password: string;
 //   port: number;
 // }
-
-const pool = new Pool({
-  user: process.env.USER,
-  host: process.env.HOST,
-  database: process.env.DATABASE,
-  password: process.env.PASSWORD,
-  port: parseInt(process.env.PORT || "5432"),
-});
 
 async () => {
   const client = await pool.connect();
@@ -41,7 +40,6 @@ app.get("/", (req: Request, res: Response, next: NextFunction) => {
 
 app.post("/posts", (req: Request, res: Response, next: NextFunction) => {
   const {
-    body,
     params: { id },
   } = req.body;
 });
@@ -61,3 +59,5 @@ app.delete("/", (req: Request, res: Response, next: NextFunction) => {
 app.listen(SERVER_PORT, () => {
   console.log("Server started on: " + SERVER_PORT);
 });
+
+export default pool;
