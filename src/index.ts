@@ -38,24 +38,6 @@ app.get("/", (req: Request, res: Response, next: NextFunction) => {
   res.send("Jensa");
 });
 
-app.post("/posts", (req: Request, res: Response, next: NextFunction) => {
-  const {
-    params: { id },
-  } = req.body;
-});
-
-app.put("/", (req: Request, res: Response, next: NextFunction) => {
-  res.send("Jensa");
-});
-
-app.patch("/", (req: Request, res: Response, next: NextFunction) => {
-  res.send("Jensa");
-});
-
-app.delete("/", (req: Request, res: Response, next: NextFunction) => {
-  res.send("Jensa");
-});
-
 app.listen(SERVER_PORT, () => {
   console.log("Server started on: " + SERVER_PORT);
 });

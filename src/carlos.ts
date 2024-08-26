@@ -1,25 +1,25 @@
-import { Router } from "express";
+import { Router, Request, Response } from "express";
 import pool from "../db";
 
 const router = Router();
 
-router.post("/users", async (req, res) => {
-  console.log(req.body);
-
+router.post("/user", async (req: Request, res: Response): Promise<void> => {
   const { user_name, email, user_name2, email2 } = req.body;
+
   try {
     const newUser = await pool.query(
       'INSERT INTO "user" (user_name , email) VALUES ($1, $2),($3, $4) RETURNING *',
       [user_name, email, user_name2, email2]
     );
-    console.log("hejs");
     res.json(newUser.rows[0]);
-  } catch (error: any) {
+  } 
+  
+  catch (error: any) {
     console.error(error.message);
   }
 });
 
-router.put("/put/:id", async (req, res) => {
+router.put("/put/:id", async (req: Request, res: Response): Promise<void> => {
   const {
     params: { id },
   } = req;
@@ -37,7 +37,7 @@ router.put("/put/:id", async (req, res) => {
 });
 
 // Det går inte att uppdatera en , den andra blir null, fungerar som put just nu
-router.patch("/patch/:id", async (req, res) => {
+router.patch("/patch/:id", async (req: Request, res: Response): Promise<void> => {
   const {
     params: { id },
   } = req;
@@ -55,7 +55,7 @@ router.patch("/patch/:id", async (req, res) => {
   }
 });
 
-router.delete("/delete/:id", async (req, res) => {
+router.delete("/delete/:id", async (req: Request, res: Response): Promise<void> => {
   const {
     params: { id },
   } = req;
