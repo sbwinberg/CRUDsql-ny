@@ -36,7 +36,7 @@ async () => {
 const SERVER_PORT = process.env.SERVER_PORT || 1337;
 
 app.get("/", (req: Request, res: Response, next: NextFunction) => {
-  res.send("Jensa bajsar");
+  res.send("Jensa");
 });
 
 app.post("/posts", (req: Request, res: Response, next: NextFunction) => {
@@ -47,15 +47,15 @@ app.post("/posts", (req: Request, res: Response, next: NextFunction) => {
 });
 
 app.put("/", (req: Request, res: Response, next: NextFunction) => {
-  res.send("Jensa bajsar");
+  res.send("Jensa");
 });
 
 app.patch("/", (req: Request, res: Response, next: NextFunction) => {
-  res.send("Jensa bajsar");
+  res.send("Jensa");
 });
 
 app.delete("/", (req: Request, res: Response, next: NextFunction) => {
-  res.send("Jensa bajsar");
+  res.send("Jensa");
 });
 
 app.listen(SERVER_PORT, () => {
