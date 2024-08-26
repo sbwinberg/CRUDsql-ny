@@ -36,6 +36,7 @@ router.put("/put/:id", async (req, res) => {
   }
 });
 
+// Det går inte att uppdatera en , den andra blir null, fungerar som put just nu
 router.patch("/patch/:id", async (req, res) => {
   const {
     params: { id },
