@@ -1,5 +1,5 @@
 import { Router, Request, Response } from "express";
-import pool from "../../db";
+import pool from "../database/db";
 
 const router = Router();
 
@@ -18,6 +18,7 @@ router.post("/user", async (req: Request, res: Response): Promise<void> => {
     console.error(error.message);
   }
 });
+
 
 router.put("/user/:id", async (req: Request, res: Response): Promise<void> => {
   const {

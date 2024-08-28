@@ -1,7 +1,7 @@
 {
   "name": "crudsql",
   "version": "1.0.0",
-  "description": "",
+  "description": "- npm init -y\r - npm i express\r - npm i dotenv\r - npm i pg",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
