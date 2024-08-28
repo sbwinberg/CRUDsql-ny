@@ -44,8 +44,6 @@ interface userDatabase {
 
 // Det går inte att uppdatera en , den andra blir null, fungerar som put just nu
 router.patch("/user/:id", async (req: Request, res: Response): Promise<void> => {
-  // hämtar user med id, sparar i lokal variable
-  let current_user;
   const {
     params: { id },
   } = req;
@@ -57,14 +55,13 @@ router.patch("/user/:id", async (req: Request, res: Response): Promise<void> => 
       'SELECT * FROM "user" WHERE user_id = $1',
       [id]
     );
-    current_user = result.rows[0]
+    let current_user = result.rows[0]
 
     // checkes if the client has updated data for user_name and/or email if not then asign the data from current_user
     if (!user_name) user_name = current_user.user_name;
     if (!email) email = current_user.email;
   } catch (error: any) {
-    console.log(current_user, 'current_user catch');
-    console.error(error.message);
+    console.error(error.message, 'error message');
   }
 
 
