@@ -4,12 +4,15 @@ import express, { Response, Request, NextFunction } from "express";
 
 import pool from "../db";
 
-import userRouter from "./carlos";
+import userRouter from "./routes/user";
+import { landingpage } from "./routes";
 // import dotenv from "dotenv";
 
 const app = express();
 app.use(express.json());
 app.use("/", userRouter);
+app.use("/", landingpage);
+
 
 // interface poolConfig {
 //   user: string;
@@ -33,10 +36,6 @@ async () => {
 };
 
 const SERVER_PORT = process.env.SERVER_PORT || 1337;
-
-app.get("/", (req: Request, res: Response, next: NextFunction) => {
-  res.send("Jensa");
-});
 
 app.listen(SERVER_PORT, () => {
   console.log("Server started on: " + SERVER_PORT);
