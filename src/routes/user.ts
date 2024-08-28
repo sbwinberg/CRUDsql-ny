@@ -8,7 +8,7 @@ router.post("/user", async (req: Request, res: Response): Promise<void> => {
 
   try {
     const newUser = await pool.query(
-      'INSERT INTO "user" (user_name , email) VALUES $1, $2 RETURNING *',
+      'INSERT INTO "user" (user_name , email) VALUES ($1, $2) RETURNING *',
       [user_name, email]
     );
     res.json(newUser.rows[0]);
@@ -95,4 +95,4 @@ router.delete("/user/:id", async (req: Request, res: Response): Promise<void> =>
   }
 });
 
-export default router;
+export {router as userRouter} ;
