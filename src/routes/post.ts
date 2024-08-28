@@ -1,25 +1,8 @@
 import { Router, Request, Response } from "express";
 import pool from "../database/db";
+import { CreatePostRequest, CreatePostResponse } from "../types/types";
 
 const router = Router();
-
-// Define the interface for the request body
-interface CreatePostRequest {
-  post_id?: number;
-  post_user_id: number;
-  post_content: string;
-  post_date: string;
-  post_tag?: string;
-}
-
-// Define the interface for the response
-interface CreatePostResponse {
-  post_id: number;
-  post_user_id: number;
-  post_content: string;
-  post_date: string;
-  post_tag?: string;
-}
 
 router.post(
   "/post",
