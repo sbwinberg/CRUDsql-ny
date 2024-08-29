@@ -51,7 +51,11 @@ interface userDatabase {
   email: string;
 }
 
-router.patch("/user/:id", async (req: Request, res: Response): Promise<void> => {
+router.patch("/user/:id", async (
+  req: Request<{id:string}, {}, CreateUserRequest>,
+  res: Response<CreateUserResponse | { error: string }>,
+  next: NextFunction
+): Promise<void> => {
   const {
     params: { id },
   } = req;
