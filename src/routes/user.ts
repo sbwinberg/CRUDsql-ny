@@ -42,14 +42,13 @@ interface userDatabase {
   email: string;
 }
 
-// Det går inte att uppdatera en , den andra blir null, fungerar som put just nu
 router.patch("/user/:id", async (req: Request, res: Response): Promise<void> => {
   const {
     params: { id },
   } = req;
   let { user_name, email } = req.body;
 
-  // get the current user
+  // request the current user
   try {
     const result = await pool.query(
       'SELECT * FROM "user" WHERE user_id = $1',
