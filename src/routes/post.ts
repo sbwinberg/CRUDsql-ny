@@ -1,4 +1,4 @@
-import { Router, Request, Response } from "express";
+import { Router, Request, Response, NextFunction } from "express";
 import pool from "../database/db";
 import { CreatePostRequest, CreatePostResponse } from "../types/types";
 
@@ -8,7 +8,8 @@ router.post(
   "/post",
   async (
     req: Request<{}, {}, CreatePostRequest>,
-    res: Response<CreatePostResponse | { error: string }>
+    res: Response<CreatePostResponse | { error: string }>,
+    next: NextFunction
   ): Promise<void> => {
     const { post_user_id, post_content, post_date, post_tag } = req.body;
 
@@ -21,12 +22,8 @@ router.post(
 
       // Return the first row from the result as the new post
       res.status(201).json(newPost.rows[0]); // 201 Created status
-    } catch (error: any) {
-      // Log the error to the console for debugging
-      console.error("Error creating post:", error.message);
-
-      // Send an error response to the client
-      res.status(500).json({ error: "Failed to create post" });
+    } catch (error: unknown) {
+      next(error);
     }
   }
 );
@@ -35,7 +32,8 @@ router.put(
   "/post/:id",
   async (
     req: Request<{ id: string }, {}, CreatePostRequest>,
-    res: Response<CreatePostResponse | { error: string }>
+    res: Response<CreatePostResponse | { error: string }>,
+    next: NextFunction
   ): Promise<void> => {
     const {
       params: { id },
@@ -48,8 +46,8 @@ router.put(
         [post_user_id, post_content, post_date, post_tag, id]
       );
       res.json(newPost.rows[0]);
-    } catch (error: any) {
-      console.error(error.message);
+    } catch (error: unknown) {
+      next(error);
     }
   }
 );
@@ -59,29 +57,28 @@ router.patch(
   "/post/:id",
   async (
     req: Request<{ id: string }, {}, CreatePostRequest>,
-    res: Response<CreatePostResponse | { error: string }>
+    res: Response<CreatePostResponse | { error: string }>,
+    next: NextFunction
   ): Promise<void> => {
     const {
       params: { id },
     } = req;
     let { post_user_id, post_content, post_date, post_tag } = req.body;
 
-  try {
-    const result = await pool.query(
-      'SELECT * FROM post WHERE post_id = $1',
-      [id]
-    );
-    let current_post = result.rows[0]
+    try {
+      const result = await pool.query("SELECT * FROM post WHERE post_id = $1", [
+        id,
+      ]);
+      let current_post = result.rows[0];
 
-    // checkes if the client has updated data for all post values, if not then asign the data from current_post
-    if (!post_user_id) post_user_id = current_post.post_user_id;
-    if (!post_content) post_content = current_post.post_content;
-    if (!post_date) post_date = current_post.post_date;
-    if (!post_tag) post_tag = current_post.post_tag;
-
-  } catch (error: any) {
-    console.error(error.message, 'error message');
-  }
+      // checkes if the client has updated data for all post values, if not then asign the data from current_post
+      if (!post_user_id) post_user_id = current_post.post_user_id;
+      if (!post_content) post_content = current_post.post_content;
+      if (!post_date) post_date = current_post.post_date;
+      if (!post_tag) post_tag = current_post.post_tag;
+    } catch (error: any) {
+      console.error(error.message, "error message");
+    }
 
     try {
       const newPost = await pool.query(
@@ -90,8 +87,8 @@ router.patch(
       );
 
       res.json(newPost.rows[0]);
-    } catch (error: any) {
-      console.error(error.message);
+    } catch (error: unknown) {
+      next(error);
     }
   }
 );
@@ -100,7 +97,8 @@ router.delete(
   "/post/:id",
   async (
     req: Request<{ id: string }, {}, CreatePostRequest>,
-    res: Response<CreatePostResponse | { error: string }>
+    res: Response<CreatePostResponse | { error: string }>,
+    next: NextFunction
   ): Promise<void> => {
     const {
       params: { id },
@@ -112,8 +110,8 @@ router.delete(
         [id]
       );
       res.json(newPost.rows[0]);
-    } catch (error: any) {
-      console.error(error.message);
+    } catch (error: unknown) {
+      next(error);
     }
   }
 );

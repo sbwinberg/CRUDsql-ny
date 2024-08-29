@@ -1,9 +1,14 @@
-import { Router, Request, Response } from "express";
+import { Router, Request, Response, NextFunction } from "express";
 import pool from "../database/db";
+import { CreateUserRequest, CreateUserResponse } from "../types/types";
 
 const router = Router();
 
-router.post("/user", async (req: Request, res: Response): Promise<void> => {
+router.post("/user", async (
+  req: Request<{}, {}, CreateUserRequest>,
+  res: Response<CreateUserResponse | { error: string }>,
+  next: NextFunction
+): Promise<void> => {
   const { user_name, email } = req.body;
 
   try {
@@ -14,13 +19,17 @@ router.post("/user", async (req: Request, res: Response): Promise<void> => {
     res.json(newUser.rows[0]);
   }
 
-  catch (error: any) {
-    console.error(error.message);
+  catch (error: unknown) {
+    next(error)
   }
 });
 
 
-router.put("/user/:id", async (req: Request, res: Response): Promise<void> => {
+router.put("/user/:id", async (
+  req: Request<{id:string}, {}, CreateUserRequest>,
+  res: Response<CreateUserResponse | { error: string }>,
+  next: NextFunction
+): Promise<void> => {
   const {
     params: { id },
   } = req;
@@ -32,8 +41,8 @@ router.put("/user/:id", async (req: Request, res: Response): Promise<void> => {
       [user_name, email, id]
     );
     res.json(newUser.rows[0]);
-  } catch (error: any) {
-    console.error(error.message);
+  } catch (error: unknown) {
+    next(error)
   }
 });
 
@@ -43,7 +52,11 @@ interface userDatabase {
 }
 
 // Det går inte att uppdatera en , den andra blir null, fungerar som put just nu
-router.patch("/user/:id", async (req: Request, res: Response): Promise<void> => {
+router.patch("/user/:id", async (
+  req: Request<{id:string}, {}, CreateUserRequest>,
+  res: Response<CreateUserResponse | { error: string }>,
+  next: NextFunction
+): Promise<void> => {
   const {
     params: { id },
   } = req;
@@ -71,25 +84,31 @@ router.patch("/user/:id", async (req: Request, res: Response): Promise<void> => 
       [user_name, email, id]
     );
     res.json(newUser.rows[0]);
-  } catch (error: any) {
-    console.error(error.message);
+  } catch (error: unknown) {
+    next(error)
   }
 });
 
-router.delete("/user/:id", async (req: Request, res: Response): Promise<void> => {
-  const {
-    params: { id },
-  } = req;
+router.delete(
+  "/user/:id",
+  async (
+    req: Request<{ id: string }, {}, CreateUserRequest>,
+    res: Response<CreateUserResponse | { error: string }>,
+    next: NextFunction
+  ): Promise<void> => {
+    const {
+      params: { id },
+    } = req;
 
-  try {
-    const newUser = await pool.query(
-      'DELETE FROM "user" WHERE user_id = $1 RETURNING*',
-      [id]
-    );
-    res.json(newUser.rows[0]);
-  } catch (error: any) {
-    console.error(error.message);
+    try {
+      const newUser = await pool.query(
+        'DELETE ROM "user" WHERE user_id = $1 RETURNING *',
+        [id]
+      );
+      res.json(newUser.rows[0]);
+    } catch (error: unknown) {
+      next(error)
+    }
   }
-});
-
+);
 export {router as userRouter} ;
