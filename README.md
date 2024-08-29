@@ -13,3 +13,14 @@
 ---
 
 - npx tsc --init --target ES2020 --module commonjs --strict --esModuleInterop --skipLibCheck --forceConsistentCasingInFileNames --outDir ./dist
+
+
+# create a 'development.env' file in the root dir and fill out the data
+SERVER_PORT=1337
+SERVER_HOSTNAME=localhost
+
+DB_USER=postgres
+DB_HOST=localhost
+DB_DATABASE=
+DB_PASSWORD=
+DB_PORT=5432
