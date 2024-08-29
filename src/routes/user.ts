@@ -51,16 +51,7 @@ interface userDatabase {
   email: string;
 }
 
-<<<<<<< HEAD
 router.patch("/user/:id", async (req: Request, res: Response): Promise<void> => {
-=======
-// Det går inte att uppdatera en , den andra blir null, fungerar som put just nu
-router.patch("/user/:id", async (
-  req: Request<{id:string}, {}, CreateUserRequest>,
-  res: Response<CreateUserResponse | { error: string }>,
-  next: NextFunction
-): Promise<void> => {
->>>>>>> oscar
   const {
     params: { id },
   } = req;
