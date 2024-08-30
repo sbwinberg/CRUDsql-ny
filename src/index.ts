@@ -2,13 +2,15 @@ import express from "express";
 import { userRouter } from "./routes/user";
 import { landingpage } from "./routes";
 import { postRouter } from "./routes/post";
-import { errorHandler, appErrorCathing } from "./middleware/errorCatching";
+import { errorHandler, appErrorCathing } from "./middleware/errorCatching"
+import { specRouter } from "./routes/spec";
 
 const app = express();
 app.use(express.json());
 app.use("/", userRouter);
 app.use("/", postRouter);
 app.use("/", landingpage);
+app.use("/", specRouter)
 app.use(errorHandler);
 // app.use(appErrorCathing);
 
