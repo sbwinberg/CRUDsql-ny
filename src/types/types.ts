@@ -25,7 +25,7 @@ export interface CreateUserRequest {
 
 // Define the interface for the response
 export interface CreateUserResponse {
-  user_id: number;
+  user_id: number | string;
   user_name: string;
   email: string;
 }

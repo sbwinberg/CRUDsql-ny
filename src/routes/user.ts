@@ -4,6 +4,23 @@ import { CreateUserRequest, CreateUserResponse } from "../types/types";
 
 const router = Router();
 
+router.get(
+  "/user",
+  async (
+    req: Request,
+    res: Response<CreateUserResponse[] | { error: string }>,
+    next: NextFunction
+  ): Promise<void> => {
+
+    try {
+      const allUser = await pool.query('SELECT * FROM "user"');
+      res.send(allUser.rows);
+    } catch (error: unknown) {
+      next(error);
+    }
+  }
+);
+
 router.post(
   "/user",
   async (
