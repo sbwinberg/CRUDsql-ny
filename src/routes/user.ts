@@ -106,7 +106,7 @@ router.delete(
 
     try {
       const newUser = await pool.query(
-        'DELETE ROM "user" WHERE user_id = $1 RETURNING *',
+        'DELETE FROM "user" WHERE user_id = $1 RETURNING *',
         [id]
       );
       res.json(newUser.rows[0]);
