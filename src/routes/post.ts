@@ -5,6 +5,24 @@ import { postSchema } from "../schema/post-schema";
 
 const router = Router();
 
+router.get(
+  "/post",
+  async (
+    req: Request<{}, {}, CreatePostRequest>,
+    res: Response<CreatePostResponse[] | { error: string }>,
+    next: NextFunction
+  ): Promise<void> => {
+    try {
+      const allPost = await pool.query("SELECT * from post");
+
+      // const displayPost: CreatePostResponse[] = allPost.rows
+      res.send(allPost.rows);
+    } catch (error: unknown) {
+      next(error);
+    }
+  }
+);
+
 router.post(
   "/post",
   async (
