@@ -1,6 +1,7 @@
-import { Router, Request, Response, NextFunction } from "express";
+import { Router, Request, Response, NextFunction, response } from "express";
 import pool from "../database/db";
 import { CreatePostRequest, CreatePostResponse } from "../types/types";
+import postSchema from '../schema/post-schema';
 
 const router = Router();
 
@@ -12,6 +13,15 @@ router.post(
     next: NextFunction
   ): Promise<void> => {
     const { post_user_id, post_content, post_date, post_tag } = req.body;
+
+    // SCHEMA VALIDATION
+    const validationResult = postSchema.validate({ post_user_id, post_content, post_date, post_tag });
+
+    if(validationResult.error){
+      const details = validationResult.error.details[0].message;
+      res.status(400).json({error: details})
+      // next(details)
+    }
 
     try {
       // Correct SQL query syntax
