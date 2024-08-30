@@ -18,20 +18,8 @@ DB_DATABASE=
 DB_PASSWORD=
 DB_PORT=5432
 
-# create a database localy on pgadmin and enter dummy data in following format
-CREATE TABLE "user" (
-	user_id serial PRIMARY KEY,
-	user_name TEXT,
-	email TEXT
-);
-
-CREATE TABLE post (
-	post_id serial PRIMARY KEY,
-	post_user_id INT REFERENCES "user"(user_id) ON DELETE CASCADE,
-	post_content TEXT,
-	post_date date,
-	post_tag VARCHAR(20)
-);
+# create a database localy on pgadmin
+# you find dummy data for postgres database in 'SQL_dummy_data.txt' stick to the following format
 
 # API endpoints
 http://localhost:1337/				Landingpage GET
