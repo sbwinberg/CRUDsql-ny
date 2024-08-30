@@ -4,7 +4,8 @@
 - npm i express
 - npm i dotenv
 - npm i pg
-
+- npm i joi
+- npm i @joi/date
 ---
 
 - denna pushades inte???? och blockerar nästa push
