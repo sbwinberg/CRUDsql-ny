@@ -1,19 +1,10 @@
 # CRUDsql
-
 - npm init -y
 - npm i express
 - npm i dotenv
 - npm i pg
-
----
-
-- denna pushades inte???? och blockerar nästa push
 - npm i -d typescript ts-node nodemon @types/node @types/express
-
----
-
 - npx tsc --init --target ES2020 --module commonjs --strict --esModuleInterop --skipLibCheck --forceConsistentCasingInFileNames --outDir ./dist
-
 
 # create a 'development.env' file in the root dir and fill out the data
 SERVER_PORT=1337
@@ -24,3 +15,18 @@ DB_HOST=localhost
 DB_DATABASE=
 DB_PASSWORD=
 DB_PORT=5432
+
+# create a database localy on pgadmin and enter dummy data in following format
+CREATE TABLE "user" (
+	user_id serial PRIMARY KEY,
+	user_name TEXT,
+	email TEXT
+);
+
+CREATE TABLE post (
+	post_id serial PRIMARY KEY,
+	post_user_id INT REFERENCES "user"(user_id) ON DELETE CASCADE,
+	post_content TEXT,
+	post_date date,
+	post_tag VARCHAR(20)
+);
