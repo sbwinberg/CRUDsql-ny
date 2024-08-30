@@ -5,7 +5,7 @@ const userSchema = Joi.object({
 
   email: Joi.string().email({
     minDomainSegments: 2,
-    tlds: { allow: [".com", ".se"] },
+    // tlds: { allow: [".com", ".se"] },
   }),
 });
 
