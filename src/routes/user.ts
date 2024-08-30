@@ -1,6 +1,7 @@
 import { Router, Request, Response, NextFunction } from "express";
 import pool from "../database/db";
 import { CreateUserRequest, CreateUserResponse } from "../types/types";
+import { userSchema } from "../schema/user-schema";
 
 const router = Router();
 
@@ -12,6 +13,17 @@ router.post(
     next: NextFunction
   ): Promise<void> => {
     const { user_name, email } = req.body;
+
+    // SCHEMA VALIDATION
+    const validationResult = userSchema.validate({
+      user_name,
+      email,
+    });
+
+    if (validationResult.error) {
+      const details = validationResult.error.details[0].message;
+      res.status(400).json({ error: details });
+    }
 
     try {
       const newUser = await pool.query(

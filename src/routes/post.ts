@@ -1,7 +1,7 @@
 import { Router, Request, Response, NextFunction, response } from "express";
 import pool from "../database/db";
 import { CreatePostRequest, CreatePostResponse } from "../types/types";
-import postSchema from '../schema/post-schema';
+import { postSchema } from "../schema/post-schema";
 
 const router = Router();
 
@@ -15,11 +15,16 @@ router.post(
     const { post_user_id, post_content, post_date, post_tag } = req.body;
 
     // SCHEMA VALIDATION
-    const validationResult = postSchema.validate({ post_user_id, post_content, post_date, post_tag });
+    const validationResult = postSchema.validate({
+      post_user_id,
+      post_content,
+      post_date,
+      post_tag,
+    });
 
-    if(validationResult.error){
+    if (validationResult.error) {
       const details = validationResult.error.details[0].message;
-      res.status(400).json({error: details})
+      res.status(400).json({ error: details });
       // next(details)
     }
 
