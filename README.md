@@ -32,3 +32,10 @@ CREATE TABLE post (
 	post_date date,
 	post_tag VARCHAR(20)
 );
+
+# API endpoints
+http://localhost:1337/				Landingpage GET
+http://localhost:1337/user			GET	
+http://localhost:1337/user/:id		POST, PUT, PATCH, DELETE
+http://localhost:1337/post			GET
+http://localhost:1337/post/:id		POST, PUT, PATCH, DELETE
