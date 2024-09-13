@@ -24,7 +24,7 @@ passport.use(
       try {
         // First, check if the user already exists
         const existingUser = await pool.query(
-          "SELECT * FROM users WHERE username = $1",
+          'SELECT * FROM "user" WHERE username = $1',
           [profile.username]
         );
 
@@ -34,7 +34,7 @@ passport.use(
 
         // User doesn't exist, insert a new user
         const newUser = await pool.query(
-          "INSERT INTO users (username, role, auth_type) VALUES ($1, $2, $3) RETURNING *",
+          'INSERT INTO "user" (username, role, auth_type) VALUES ($1, $2, $3) RETURNING *',
           [profile.username, "user", "github"]
         );
         return done(null, newUser.rows[0]);
@@ -62,7 +62,7 @@ passport.use(
 //       try {
 //         // Kollar om användaren redan finns i databasen
 //         const existingUser = await pool.query(
-//           "SELECT * FROM users WHERE username = $1",
+//           'SELECT * FROM "user" WHERE username = $1',
 //           [profile.username]
 //         );
 
@@ -72,7 +72,7 @@ passport.use(
 //         } else {
 //           // Användaren finns inte, skapa en ny användare
 //           const newUser = await pool.query(
-//             "INSERT INTO users (username, role, auth_type) VALUES ($1, $2, $3) RETURNING *",
+//             'INSERT INTO "user" (username, role, auth_type) VALUES ($1, $2, $3) RETURNING *',
 //             [profile.username, "user", "github"]
 //           );
 
@@ -94,7 +94,7 @@ passport.serializeUser((user: any, done: any) => {
 passport.deserializeUser(async (id: number, done) => {
   try {
     const result = await pool.query(
-      "SELECT id, username, role FROM users WHERE id = $1",
+      'SELECT id, username, role FROM "user" WHERE id = $1',
       [id]
     );
     const user = result.rows[0];

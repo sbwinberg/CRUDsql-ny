@@ -29,3 +29,29 @@ export interface CreateUserResponse {
   user_name: string;
   email: string;
 }
+
+
+// 
+export interface User {
+  id: number;
+  user_name: string;
+  email: string
+  password: string;
+  role: string;
+}
+
+declare global {
+  namespace Express {
+    interface User {
+      id: number;
+      username: string;
+      role: string;
+    }
+  }
+}
+
+// CREATE TABLE "user" (
+// 	user_id serial PRIMARY KEY,
+// 	user_name TEXT,
+// 	email TEXT
+// );

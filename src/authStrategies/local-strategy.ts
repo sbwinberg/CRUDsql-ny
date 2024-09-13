@@ -4,29 +4,17 @@ import pool from "../database/db";
 import bcrypt from "bcrypt";
 import { Response, Request, NextFunction } from "express";
 
-interface User {
-  id: number;
-  username: string;
-  password: string;
-  role: string;
-}
+//Types
+import { User } from "../types/types";
 
-declare global {
-  namespace Express {
-    interface User {
-      id: number;
-      username: string;
-      role: string;
-    }
-  }
-}
+
 // Här definerar vi vår strategy för passport, I detta fall använder vi LocalStrategy.
 // Vi kan använda oss av flera strategys samtidigt, som tex Oauth med google, facebook, discord osv.
 passport.use(
   new LocalStrategy(async (username, password, done) => {
     try {
       const result = await pool.query(
-        "SELECT * FROM users WHERE username = $1",
+        'SELECT * FROM "user" WHERE username = $1',
         [username]
       );
       const user = result.rows[0];
@@ -62,7 +50,7 @@ passport.serializeUser((user: any, done) => {
 passport.deserializeUser(async (id: number, done) => {
   try {
     const result = await pool.query(
-      "SELECT id, username, role FROM users WHERE id = $1",
+      'SELECT id, username, role FROM "user" WHERE id = $1',
       [id]
     );
     const user = result.rows[0];

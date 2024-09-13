@@ -4,7 +4,9 @@ post;
 CREATE TABLE "user" (
 	user_id serial PRIMARY KEY,
 	user_name TEXT,
-	email TEXT
+	email TEXT,
+    password TEXT,
+    role TEXT
 );
 
 CREATE TABLE post (
@@ -15,50 +17,40 @@ CREATE TABLE post (
 	post_tag VARCHAR(20)
 );
 
-INSERT INTO
-	"user" (user_name, email)
-VALUES
-	('John Doe', 'johndoe@example.com'),
-	('Jane Smith', 'janesmith@example.com'),
-	('Emily Johnson', 'emilyj@example.com'),
-	('Michael Brown', 'michaelb@example.com'),
-	('Linda White', 'lindaw@example.com'),
-	('Robert Davis', 'robertd@example.com'),
-	('Patricia Miller', 'patriciam@example.com'),
-	('William Wilson', 'williamw@example.com'),
-	('Barbara Moore', 'barbaram@example.com'),
-	('James Taylor', 'jamest@example.com');
+INSERT INTO "user" (user_name, email, password, role) VALUES
+('Alice Johnson', 'alice.johnson@example.com', 'password1', 'user'),
+('Bob Smith', 'bob.smith@example.com', 'password2', 'user'),
+('Carol Davis', 'carol.davis@example.com', 'password3', 'user'),
+('David Brown', 'david.brown@example.com', 'password4', 'user'),
+('Eva White', 'eva.white@example.com', 'password5', 'user'),
+('Frank Green', 'frank.green@example.com', 'password6', 'user'),
+('Grace Black', 'grace.black@example.com', 'password7', 'user'),
+('Hank Wilson', 'hank.wilson@example.com', 'password8', 'user'),
+('Ivy Taylor', 'ivy.taylor@example.com', 'password9', 'user'),
+('Jack Lee', 'jack.lee@example.com', 'password10', 'user');
 
-INSERT INTO 
-    post (post_user_id, post_content, post_date, post_tag) 
-VALUES
-    (1, 'Lär dig JavaScript från grunden!', '2024-08-23', 'programmering'),
-    (1, 'Hur du optimerar din webbsida för SEO', '2024-08-20', 'webbutveckling'),
-    (2, 'Nyheter om senaste teknologin inom AI', '2024-08-21', 'teknologi'),
-    (2, 'Topp 10 tips för att bli en bättre utvecklare', '2024-08-22', 'utveckling'),
-    (2, 'Förstå grunderna i React och Redux', '2024-08-19', 'JavaScript'),
-    (2, 'Att bli expert på CSS grids', '2024-08-24', 'CSS'),
-    (3, 'Framtiden för webbdesign', '2024-08-25', 'webbutveckling'),
-    (3, 'Varför TypeScript är framtiden', '2024-08-26', 'programmering'),
-    (3, 'AI och maskininlärning: Vad du behöver veta', '2024-08-27', 'teknologi'),
-    (5, 'Fördelarna med att använda Docker', '2024-08-28', 'devops'),
-    (4, 'Grunderna i Git och versionering', '2024-08-29', 'utveckling'),
-    (4, 'Så här använder du GraphQL', '2024-08-30', 'programmering'),
-    (5, 'Topp 5 plugins för VSCode', '2024-08-31', 'verktyg'),
-    (5, 'Introduktion till serverlös arkitektur', '2024-09-01', 'moln'),
-    (5, 'Förstå REST API', '2024-09-02', 'webbutveckling'),
-    (6, 'Bygg din första app med Node.js', '2024-09-03', 'JavaScript'),
-    (6, 'Säkerhet för webbutvecklare', '2024-09-04', 'säkerhet'),
-    (6, 'Introduktion till Machine Learning', '2024-09-05', 'AI'),
-    (7, 'Hur man använder Firebase i dina projekt', '2024-09-06', 'moln'),
-    (7, 'Att förstå GraphQL och dess fördelar', '2024-09-07', 'webbutveckling'),
-    (7, 'Varför du borde lära dig Python', '2024-09-08', 'programmering'),
-    (8, 'De bästa JavaScript-ramverken 2024', '2024-09-09', 'JavaScript'),
-    (8, 'Hur man använder Docker Compose', '2024-09-10', 'devops'),
-    (2, 'En guide till att börja med Webpack', '2024-09-11', 'webbutveckling'),
-    (7, 'Ska du lära dig Java eller Kotlin?', '2024-09-12', 'programmering'),
-    (9, 'Vad är nytt i React 18?', '2024-09-13', 'JavaScript'),
-    (10, 'Att förstå OpenID och OAuth', '2024-09-14', 'säkerhet'),
-    (10, 'Så här använder du JSON Web Tokens', '2024-09-15', 'säkerhet'),
-    (10, 'Förstå mikrotjänster och deras fördelar', '2024-09-16', 'webbutveckling'),
-    (10, 'Vad är nytt i Angular 14?', '2024-09-17', 'JavaScript');
+INSERT INTO post (post_user_id, post_content, post_date, post_tag) VALUES
+(1, 'Just joined a new soccer team! Excited for the first match.', '2024-09-01', 'sport'),
+(1, 'Bought a new sports car, it’s amazing!', '2024-09-02', 'bilar'),
+(2, 'Had a great workout session this morning.', '2024-09-03', 'sport'),
+(2, 'The new model of my favorite car is out, can’t wait to test drive it.', '2024-09-04', 'bilar'),
+(2, 'Exploring new fitness routines at the gym.', '2024-09-05', 'sport'),
+(3, 'Going to the basketball game this weekend.', '2024-09-06', 'sport'),
+(3, 'My car just got a new paint job, looks stunning!', '2024-09-07', 'bilar'),
+(4, 'Just signed up for a marathon, wish me luck!', '2024-09-08', 'sport'),
+(4, 'Found a great deal on car parts today.', '2024-09-09', 'bilar'),
+(4, 'The marathon training is intense!', '2024-09-10', 'sport'),
+(5, 'Love playing tennis during weekends.', '2024-09-11', 'sport'),
+(5, 'Can’t believe how fast my new car is!', '2024-09-12', 'bilar'),
+(6, 'Had a fantastic time at the gym today.', '2024-09-13', 'sport'),
+(7, 'Planning a road trip in my car next month.', '2024-09-14', 'bilar'),
+(7, 'Training for a triathlon is tough but rewarding.', '2024-09-15', 'sport'),
+(7, 'Upgraded my car’s tires for better performance.', '2024-09-16', 'bilar'),
+(8, 'Went hiking and it felt like a great workout.', '2024-09-17', 'sport'),
+(8, 'Spotted a classic car at the show today.', '2024-09-18', 'bilar'),
+(9, 'Started a new yoga class to improve flexibility.', '2024-09-19', 'sport'),
+(9, 'Received a car magazine subscription, very excited!', '2024-09-20', 'bilar'),
+(9, 'Yoga is helping with my sports injuries.', '2024-09-21', 'sport'),
+(10, 'Participated in a local soccer league, had a blast!', '2024-09-22', 'sport');
+
+
