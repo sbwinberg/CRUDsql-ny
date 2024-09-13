@@ -5,8 +5,8 @@ CREATE TABLE "user" (
 	user_id serial PRIMARY KEY,
 	user_name TEXT,
 	email TEXT,
-    password TEXT,
-    role TEXT
+  password TEXT,
+  role TEXT
 );
 
 CREATE TABLE post (
