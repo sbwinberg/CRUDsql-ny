@@ -1,5 +1,5 @@
 import { Router, Request, Response, NextFunction } from "express";
-import { CreatePostResponse, CreateUserResponse } from "../types/types";
+import { User } from "../types/types";
 import pool from "../database/db";
 
 const router = Router();
@@ -10,7 +10,7 @@ router.get(
   async (
     req: Request,
     res: Response<
-      CreateUserResponse[] | CreatePostResponse[] | { error: string }
+      User[] | User[] | { error: string }
     >,
     next: NextFunction
   ): Promise<void> => {
@@ -36,7 +36,7 @@ router.get(
   async (
     req: Request,
     res: Response<
-      CreateUserResponse[] | CreatePostResponse[] | { error: string }
+      User[] | User[] | { error: string }
     >,
     next: NextFunction
   ): Promise<void> => {
@@ -63,7 +63,7 @@ router.get(
   async (
     req: Request,
     res: Response<
-      CreateUserResponse[] | CreatePostResponse[] | { error: string }
+      User[] | User[] | { error: string }
     >,
     next: NextFunction
   ): Promise<void> => {
