@@ -24,11 +24,11 @@ DB_PORT=5432
 # API endpoints
 http://localhost:1337/				Landingpage GET
 
-http://localhost:1337/user			GET	
-http://localhost:1337/user/:id		POST, PUT, PATCH, DELETE
+http://localhost:1337/user			GET, POST
+http://localhost:1337/user/:id	    PUT, PATCH, DELETE
 
-http://localhost:1337/post			GET
-http://localhost:1337/post/:id		POST, PUT, PATCH, DELETE
+http://localhost:1337/post			GET, POST
+http://localhost:1337/post/:id		PUT, PATCH, DELETE
 
 http://localhost:1337/spec1			GET
 http://localhost:1337/spec2			GET

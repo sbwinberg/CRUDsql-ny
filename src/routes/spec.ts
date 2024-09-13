@@ -9,9 +9,7 @@ router.get(
   "/spec1",
   async (
     req: Request,
-    res: Response<
-      User[] | User[] | { error: string }
-    >,
+    res: Response<User[] | User[] | { error: string }>,
     next: NextFunction
   ): Promise<void> => {
     try {
@@ -35,9 +33,7 @@ router.get(
   "/spec2",
   async (
     req: Request,
-    res: Response<
-      User[] | User[] | { error: string }
-    >,
+    res: Response<User[] | User[] | { error: string }>,
     next: NextFunction
   ): Promise<void> => {
     try {
@@ -47,7 +43,7 @@ router.get(
           LEFT OUTER JOIN post
           ON post.post_user_id = "user".user_id
           GROUP BY "user".user_id
-          HAVING COUNT(post.post_user_id) > 3
+          HAVING COUNT(post.post_user_id) >= 3
         `
       );
       res.send(postCounter.rows);
@@ -62,9 +58,7 @@ router.get(
   "/spec3",
   async (
     req: Request,
-    res: Response<
-      User[] | User[] | { error: string }
-    >,
+    res: Response<User[] | User[] | { error: string }>,
     next: NextFunction
   ): Promise<void> => {
     try {

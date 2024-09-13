@@ -50,7 +50,7 @@ router.post(
 
     try {
       const newUser = await pool.query(
-        'INSERT INTO "user" (user_name , email) VALUES ($1, $2, $3, $4) RETURNING *',
+        'INSERT INTO "user" (user_name , email, password, role) VALUES ($1, $2, $3, $4) RETURNING *',
         [user_name, email, hash, role]
       );
       res.json(newUser.rows[0]);
