@@ -43,6 +43,6 @@
     "@babel/node": "^7.22.19",
     "@babel/preset-env": "^7.23.6",
     "@types/passport": "^1.0.7",
-    "@types/passport-local": "^1.0.34",
+    "@types/passport-local": "^1.0.34"
   }
 }
