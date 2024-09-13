@@ -31,13 +31,13 @@ export interface CreateUserResponse {
 }
 
 
-// 
+//
 export interface User {
-  id: number;
+  id?: number;
   user_name: string;
   email: string
   password: string;
-  role: string;
+  role: userRole;
 }
 
 declare global {
@@ -49,6 +49,8 @@ declare global {
     }
   }
 }
+
+type userRole = "user" | "admin"
 
 // CREATE TABLE "user" (
 // 	user_id serial PRIMARY KEY,

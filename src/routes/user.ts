@@ -1,7 +1,8 @@
 import { Router, Request, Response, NextFunction } from "express";
 import pool from "../database/db";
-import { CreateUserRequest, CreateUserResponse } from "../types/types";
+import { User } from "../types/types";
 import { userSchema } from "../schema/user-schema";
+import bcrypt from 'bcrypt'
 
 const router = Router();
 
@@ -9,7 +10,7 @@ router.get(
   "/user",
   async (
     req: Request,
-    res: Response<CreateUserResponse[] | { error: string }>,
+    res: Response<User[] | { error: string }>,
     next: NextFunction
   ): Promise<void> => {
 
@@ -25,16 +26,18 @@ router.get(
 router.post(
   "/user",
   async (
-    req: Request<{}, {}, CreateUserRequest>,
-    res: Response<CreateUserResponse | { error: string }>,
+    req: Request<{}, {}, User>,
+    res: Response<User | { error: string }>,
     next: NextFunction
   ): Promise<void> => {
-    const { user_name, email } = req.body;
+    const { user_name, email, password, role } = req.body;
 
     // SCHEMA VALIDATION
     const validationResult = userSchema.validate({
       user_name,
       email,
+      password,
+      role
     });
 
     if (validationResult.error) {
@@ -42,9 +45,11 @@ router.post(
       res.status(400).json({ error: details });
     }
 
+    
+
     try {
       const newUser = await pool.query(
-        'INSERT INTO "user" (user_name , email) VALUES ($1, $2) RETURNING *',
+        'INSERT INTO "user" (user_name , email) VALUES ($1, $2, $3, $4) RETURNING *',
         [user_name, email]
       );
       res.json(newUser.rows[0]);
@@ -57,8 +62,8 @@ router.post(
 router.put(
   "/user/:id",
   async (
-    req: Request<{ id: string }, {}, CreateUserRequest>,
-    res: Response<CreateUserResponse | { error: string }>,
+    req: Request<{ id: string }, {}, User>,
+    res: Response<User | { error: string }>,
     next: NextFunction
   ): Promise<void> => {
     const {
@@ -86,8 +91,8 @@ interface userDatabase {
 router.patch(
   "/user/:id",
   async (
-    req: Request<{ id: string }, {}, CreateUserRequest>,
-    res: Response<CreateUserResponse | { error: string }>,
+    req: Request<{ id: string }, {}, User>,
+    res: Response<User | { error: string }>,
     next: NextFunction
   ): Promise<void> => {
     const {
@@ -125,8 +130,8 @@ router.patch(
 router.delete(
   "/user/:id",
   async (
-    req: Request<{ id: string }, {}, CreateUserRequest>,
-    res: Response<CreateUserResponse | { error: string }>,
+    req: Request<{ id: string }, {}, User>,
+    res: Response<User | { error: string }>,
     next: NextFunction
   ): Promise<void> => {
     const {
