@@ -7,7 +7,7 @@ const userSchema = Joi.object({
     minDomainSegments: 2,
     // tlds: { allow: [".com", ".se"] },
   }),
-  password: Joi.string().min(8).max(32).$.$.required(),
+  password: Joi.string().min(8).max(32).required(),
   role: Joi.string()
 });
 

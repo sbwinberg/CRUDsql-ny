@@ -44,13 +44,14 @@ router.post(
       const details = validationResult.error.details[0].message;
       res.status(400).json({ error: details });
     }
-
-    
+    // HASH PASSWORD
+    const salt = bcrypt.genSaltSync(10)
+    const hash= await bcrypt.hash(password, salt)
 
     try {
       const newUser = await pool.query(
         'INSERT INTO "user" (user_name , email) VALUES ($1, $2, $3, $4) RETURNING *',
-        [user_name, email]
+        [user_name, email, hash, role]
       );
       res.json(newUser.rows[0]);
     } catch (error: unknown) {
