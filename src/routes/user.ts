@@ -89,6 +89,8 @@ interface userDatabase {
   email: string;
 }
 
+
+// BEHÖVS TVÅ TRY/CATCH? 
 router.patch(
   "/user/:id",
   async (
@@ -107,11 +109,17 @@ router.patch(
         'SELECT * FROM "user" WHERE user_id = $1',
         [id]
       );
-      let current_user = result.rows[0];
+
+      // Detta borde bara uppdatera(skriva över) de rader som finns i request-bodyn och lämna det andra orört.
+      let current_user = {
+        ...result.rows[0],
+        ...req.body
+      };
 
       // checkes if the client has updated data for user_name and/or email if not then asign the data from current_user
-      if (!user_name) user_name = current_user.user_name;
-      if (!email) email = current_user.email;
+      // if (!user_name) user_name = current_user.user_name;
+      // if (!email) email = current_user.email;
+
     } catch (error: any) {
       console.error(error.message, "error message");
     }

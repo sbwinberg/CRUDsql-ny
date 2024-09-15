@@ -78,13 +78,18 @@ router.patch("/post/:id", async (req: Request<{ id: string }, {}, Post>, res: Re
     const result = await pool.query("SELECT * FROM post WHERE post_id = $1", [
       id,
     ]);
-    let current_post = result.rows[0];
+
+    // Detta gör samma som våra 4 if-checks
+    let current_post = {
+      ...result.rows[0],
+      ...req.body
+    };
 
     // checkes if the client has updated data for all post values, if not then asign the data from current_post
-    if (!post_user_id) post_user_id = current_post.post_user_id;
-    if (!post_content) post_content = current_post.post_content;
-    if (!post_date) post_date = current_post.post_date;
-    if (!post_tag) post_tag = current_post.post_tag;
+    // if (!post_user_id) post_user_id = current_post.post_user_id;
+    // if (!post_content) post_content = current_post.post_content;
+    // if (!post_date) post_date = current_post.post_date;
+    // if (!post_tag) post_tag = current_post.post_tag;
   } catch (error: any) {
     console.error(error.message, "error message");
   }
