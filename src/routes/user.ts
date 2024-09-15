@@ -98,10 +98,10 @@ router.patch(
     res: Response<User | { error: string }>,
     next: NextFunction
   ): Promise<void> => {
-    const {
-      params: { id },
-    } = req;
-    let { user_name, email } = req.body;
+    const {params: { id }} = req;
+
+    // Eftersom vi har types som ser till att bodyn är korrekt formaterad när den skickas in så kan vi spreada denna på rad 115 istället för att destructa
+    // let { user_name, email } = req.body;
 
     // request the current user
     try {
@@ -111,25 +111,25 @@ router.patch(
       );
 
       // Detta borde bara uppdatera(skriva över) de rader som finns i request-bodyn och lämna det andra orört.
-      let current_user = {
+      let updated_user = {
         ...result.rows[0],
         ...req.body
       };
 
+      const newUser = await pool.query(
+        'UPDATE "user" SET user_name = $1, email = $2 WHERE user_id = $3 RETURNING*',
+        [updated_user.user_name, updated_user.email, updated_user.id]
+      );
+      res.json(newUser.rows[0]);
       // checkes if the client has updated data for user_name and/or email if not then asign the data from current_user
       // if (!user_name) user_name = current_user.user_name;
       // if (!email) email = current_user.email;
 
-    } catch (error: any) {
-      console.error(error.message, "error message");
-    }
+    // } catch (error: any) {
+    //   console.error(error.message, "error message");
+    // }
 
-    try {
-      const newUser = await pool.query(
-        'UPDATE "user" SET user_name = $1, email = $2 WHERE user_id = $3 RETURNING*',
-        [user_name, email, id]
-      );
-      res.json(newUser.rows[0]);
+    // try {
     } catch (error: unknown) {
       next(error);
     }

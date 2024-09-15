@@ -72,35 +72,32 @@ router.patch("/post/:id", async (req: Request<{ id: string }, {}, Post>, res: Re
     params: { id },
   } = req;
   let { post_user_id, post_content, post_date, post_tag } = req.body;
-
+  
   // requset the current post
   try {
     const result = await pool.query("SELECT * FROM post WHERE post_id = $1", [
       id,
     ]);
-
+    
     // Detta gör samma som våra 4 if-checks
-    let current_post = {
+    let updated_post = {
       ...result.rows[0],
       ...req.body
     };
+    
+    
+    const newPost = await pool.query(
+      'UPDATE "post" SET post_user_id =$1,  post_content = $2, post_date = $3, post_tag = $4 WHERE post_id = $5 RETURNING*',
+      [updated_post.post_user_id, updated_post.post_content, updated_post.post_date, updated_post.post_tag, updated_post.id]
+    );
+    
+    res.json(newPost.rows[0]);
 
     // checkes if the client has updated data for all post values, if not then asign the data from current_post
     // if (!post_user_id) post_user_id = current_post.post_user_id;
     // if (!post_content) post_content = current_post.post_content;
     // if (!post_date) post_date = current_post.post_date;
     // if (!post_tag) post_tag = current_post.post_tag;
-  } catch (error: any) {
-    console.error(error.message, "error message");
-  }
-
-  try {
-    const newPost = await pool.query(
-      'UPDATE "post" SET post_user_id =$1,  post_content = $2, post_date = $3, post_tag = $4 WHERE post_id = $5 RETURNING*',
-      [post_user_id, post_content, post_date, post_tag, id]
-    );
-
-    res.json(newPost.rows[0]);
   } catch (error: unknown) {
     next(error);
   }
