@@ -4,9 +4,9 @@ import { landingpage } from "./routes";
 import { postRouter } from "./routes/post";
 import { errorHandler, appErrorCathing } from "./middleware/errorCatching";
 import { specRouter } from "./routes/spec";
-import {checkAuthRoutes} from "./routes/testRoutesCheckAuthorization"
+import { checkAuthRoutes } from "./routes/testRoutesCheckAuthorization";
 
-import "./authStrategies/local-strategy.js";
+import "./authStrategies/local-strategy";
 
 const app = express();
 app.use(express.json());

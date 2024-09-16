@@ -1,7 +1,7 @@
 // This file contains the routes that require authorization to access.
 
 import express from "express";
-import { authorize } from "../authStrategies/local-strategy.js";
+import { authorize } from "../authStrategies/local-strategy";
 
 const router = express.Router();
 
