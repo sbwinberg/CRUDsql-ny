@@ -7,42 +7,42 @@ import bcrypt from 'bcrypt'
 const router = Router();
 
 router.get("/user", async (req: Request, res: Response<User[] | { error: string }>, next: NextFunction): Promise<void> => {
-    try {
-      const allUser = await pool.query('SELECT * FROM "user"');
-      res.send(allUser.rows);
-    } 
-    catch (error: unknown) {
-      next(error);
-    }
-  });
+  try {
+    const allUser = await pool.query('SELECT * FROM "user"');
+    res.send(allUser.rows);
+  }
+  catch (error: unknown) {
+    next(error);
+  }
+});
 
 router.post("/user", async (req: Request<{}, {}, User>, res: Response<User | { error: string }>, next: NextFunction): Promise<void> => {
-    const { user_name, email, password, role } = req.body;
+  const { user_name, email, password, role } = req.body;
 
-    // SCHEMA VALIDATION
-    const validationResult = userSchema.validate({
-      user_name,
-      email,
-      password,
-      role
-    });
-
-    if (validationResult.error) {
-      const details = validationResult.error.details[0].message;
-      res.status(400).json({ error: details });
-    }
-    // HASH PASSWORD
-    const salt = bcrypt.genSaltSync(10)
-    const hash = await bcrypt.hash(password, salt)
-
-    try {
-      const newUser = await pool.query('INSERT INTO "user" (user_name , email, password, role) VALUES ($1, $2, $3, $4) RETURNING *', [user_name, email, hash, role]);
-      res.json(newUser.rows[0]);
-    }
-    catch (error: unknown) {
-      next(error);
-    }
+  // SCHEMA VALIDATION
+  const validationResult = userSchema.validate({
+    user_name,
+    email,
+    password,
+    role
   });
+
+  if (validationResult.error) {
+    const details = validationResult.error.details[0].message;
+    res.status(400).json({ error: details });
+  }
+  // HASH PASSWORD
+  const salt = bcrypt.genSaltSync(10)
+  const hash = await bcrypt.hash(password, salt)
+
+  try {
+    const newUser = await pool.query('INSERT INTO "user" (user_name , email, password, role) VALUES ($1, $2, $3, $4) RETURNING *', [user_name, email, hash, role]);
+    res.json(newUser.rows[0]);
+  }
+  catch (error: unknown) {
+    next(error);
+  }
+});
 
 router.put("/user/:id", async (req: Request<{ id: string }, {}, User>, res: Response<User | { error: string }>, next: NextFunction): Promise<void> => {
   const { params: { id }, } = req;
