@@ -5,6 +5,7 @@ import { postRouter } from "./routes/post";
 import { errorHandler, appErrorCathing } from "./middleware/errorCatching";
 import { specRouter } from "./routes/spec";
 import { checkAuthRoutes } from "./routes/testRoutesCheckAuthorization";
+import { loginRouter } from "./routes/login";
 
 import "./authStrategies/local-strategy";
 
@@ -15,6 +16,7 @@ app.use("/", postRouter);
 app.use("/", landingpage);
 app.use("/", specRouter);
 app.use("/", checkAuthRoutes); // test
+app.use("/", loginRouter); // test login
 app.use(errorHandler);
 // app.use(appErrorCathing);
 
