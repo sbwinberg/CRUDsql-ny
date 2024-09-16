@@ -11,20 +11,12 @@ router.post("/login", async (req: Request, res: Response, next: NextFunction) =>
         const { username, password } = req.body;
 
         // Fetch user from database
-        const result = await pool.query(
-            "SELECT * FROM users WHERE username = $1",
-            [username]
-        );
+        const result = await pool.query("SELECT * FROM users WHERE username = $1", [username]);
         const user = result.rows[0];
 
         // Compare passwords
         const isMatch = await bcrypt.compare(password, user.password);
-
-        if (!isMatch) {
-            return res
-                .status(401)
-                .json({ message: "Invalid username or password" });
-        }
+        if (!isMatch) return res.status(401).json({ message: "Invalid username or password" });
 
         // If passwords match -> login
         req.login(user, (err) => {
@@ -34,11 +26,11 @@ router.post("/login", async (req: Request, res: Response, next: NextFunction) =>
                 user: { id: user.id, username: user.username, role: user.role },
             });
         });
-    } catch (error) {
+    }
+    catch (error) {
         next(error);
     }
-}
-);
+});
 
 // Github login route
 
@@ -49,13 +41,9 @@ router.post("/login", async (req: Request, res: Response, next: NextFunction) =>
 
 //github test route
 router.get("/auth/github", (req, res, next) => {
-    const githubAuthURL = `https://github.com/login/oauth/authorize?client_id=${process.env.GITHUB_CLIENT_ID
-        }&redirect_uri=${encodeURIComponent(
-            "http://localhost:3000/api/auth/github/callback"
-        )}&scope=user:email`;
+    const githubAuthURL = `https://github.com/login/oauth/authorize?client_id=${process.env.GITHUB_CLIENT_ID}&redirect_uri=${encodeURIComponent("http://localhost:3000/api/auth/github/callback")}&scope=user:email`;
 
     console.log("GitHub Auth URL:", githubAuthURL);
-
     passport.authenticate("github", { scope: ["user:email"] })(req, res, next);
 });
 
@@ -63,7 +51,6 @@ router.get("/auth/github/callback", passport.authenticate("github", { failureRed
     res.json({
         message: "Github Auth successful",
     });
-}
-);
+});
 
 export { router as loginRouter };
