@@ -27,4 +27,4 @@ router.get("/user-profile", authorize("admin", "editor", "user"), (req, res) => 
   }
 );
 
-export default router;
+export {router as checkAuthRoutes};

@@ -4,6 +4,7 @@ import { landingpage } from "./routes";
 import { postRouter } from "./routes/post";
 import { errorHandler, appErrorCathing } from "./middleware/errorCatching";
 import { specRouter } from "./routes/spec";
+import {checkAuthRoutes} from "./routes/testRoutesCheckAuthorization"
 
 import "./authStrategies/local-strategy.js";
 
@@ -12,7 +13,8 @@ app.use(express.json());
 app.use("/", userRouter);
 app.use("/", postRouter);
 app.use("/", landingpage);
-app.use("/", specRouter)
+app.use("/", specRouter);
+app.use("/", checkAuthRoutes); // test
 app.use(errorHandler);
 // app.use(appErrorCathing);
 
