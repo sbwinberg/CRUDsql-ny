@@ -28,3 +28,8 @@ http://localhost:1337/user-only		        GET
 http://localhost:1337/admin-only	        GET
 http://localhost:1337/content-managment		GET
 http://localhost:1337/user-profile	        GET
+
+http://localhost:1337/login                 GET
+http://localhost:1337/auth/github	        GET
+http://localhost:1337/auth/github/callback  GET
+
