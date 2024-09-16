@@ -13,31 +13,14 @@ import { User } from "../types/types";
 passport.use(
   new LocalStrategy(async (username, password, done) => {
     try {
-      const result = await pool.query(
-        'SELECT * FROM "user" WHERE username = $1',
-        [username]
-      );
+      const result = await pool.query('SELECT * FROM "user" WHERE username = $1', [username]);
       const user = result.rows[0];
-
-      if (!user) {
-        return done(null, false, { message: "Incorrect username or password" });
-      }
+      if (!user) return done(null, false, { message: "Incorrect username or password" });
 
       const isMatch = await bcrypt.compare(password, user.password);
-
-      // Funkar med ternary för att spara lite plats
-      // return !isMatch ? done(null, false, { message: "Incorrect username or password" }) : done(null, {id: user.id, username: user.username, role: user.role})
-
-      if (!isMatch) {
-        return done(null, false, { message: "Incorrect username or password" });
-      }
-
-      return done(null, {
-        id: user.id,
-        username: user.username,
-        role: user.role,
-      });
-    } catch (error) {
+      return !isMatch ? done(null, false, { message: "Incorrect username or password" }) : done(null, { id: user.id, username: user.username, role: user.role });
+    }
+    catch (error) {
       return done(error);
     }
   })
@@ -52,14 +35,12 @@ passport.serializeUser((user: any, done) => {
 //deserializeUser använder vi för att hämta vårt user object från vår sparade session.
 passport.deserializeUser(async (id: number, done) => {
   try {
-    const result = await pool.query(
-      'SELECT id, username, role FROM "user" WHERE id = $1',
-      [id]
-    );
+    const result = await pool.query('SELECT id, username, role FROM "user" WHERE id = $1', [id]);
     const user = result.rows[0];
     console.log("deserialize user", user);
     done(null, user);
-  } catch (error) {
+  } 
+  catch (error) {
     done(error, null);
   }
 });
