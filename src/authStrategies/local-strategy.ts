@@ -25,6 +25,9 @@ passport.use(
 
       const isMatch = await bcrypt.compare(password, user.password);
 
+      // Funkar med ternary för att spara lite plats
+      // return !isMatch ? done(null, false, { message: "Incorrect username or password" }) : done(null, {id: user.id, username: user.username, role: user.role})
+
       if (!isMatch) {
         return done(null, false, { message: "Incorrect username or password" });
       }
@@ -54,7 +57,7 @@ passport.deserializeUser(async (id: number, done) => {
       [id]
     );
     const user = result.rows[0];
-    console.log("deserilize user", user);
+    console.log("deserialize user", user);
     done(null, user);
   } catch (error) {
     done(error, null);
