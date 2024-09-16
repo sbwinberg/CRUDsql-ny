@@ -1,6 +1,6 @@
 import { Router, Request, Response, NextFunction } from "express";
 import pool from "../database/db";
-import { User } from "../types/types";
+import { createUserResponse, User } from "../types/types";
 import { userSchema } from "../schema/user-schema";
 import bcrypt from 'bcrypt'
 
@@ -16,7 +16,8 @@ router.get("/user", async (req: Request, res: Response<User[] | { error: string 
   }
 });
 
-router.post("/user", async (req: Request<{}, {}, User>, res: Response<User | { error: string }>, next: NextFunction): Promise<void> => {
+// Create/register user
+router.post("/user", async (req: Request<{}, {}, User>, res: Response<createUserResponse | { error: string }>, next: NextFunction): Promise<void> => {
   const { user_name, email, password, role } = req.body;
 
   // SCHEMA VALIDATION
@@ -37,7 +38,10 @@ router.post("/user", async (req: Request<{}, {}, User>, res: Response<User | { e
 
   try {
     const newUser = await pool.query('INSERT INTO "user" (user_name , email, password, role) VALUES ($1, $2, $3, $4) RETURNING *', [user_name, email, hash, role]);
-    res.json(newUser.rows[0]);
+    res.status(201).json({
+      message: "User registered successfully",
+      user: newUser.rows[0]
+    });
   }
   catch (error: unknown) {
     next(error);

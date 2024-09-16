@@ -2,8 +2,10 @@ import express from "express";
 import { userRouter } from "./routes/user";
 import { landingpage } from "./routes";
 import { postRouter } from "./routes/post";
-import { errorHandler, appErrorCathing } from "./middleware/errorCatching"
+import { errorHandler, appErrorCathing } from "./middleware/errorCatching";
 import { specRouter } from "./routes/spec";
+
+import "./authStrategies/local-strategy.js";
 
 const app = express();
 app.use(express.json());

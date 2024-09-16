@@ -15,6 +15,11 @@ export interface User {
   role: userRole;
 }
 
+export interface createUserResponse {
+  message: string
+  user: User;
+}
+
 declare global {
   namespace Express {
     interface User {
@@ -25,4 +30,4 @@ declare global {
   }
 }
 
-type userRole = "user" | "admin"
+type userRole = "user" | "admin" | "editor"
