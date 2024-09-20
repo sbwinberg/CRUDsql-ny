@@ -1,38 +1,38 @@
 export interface User {
-  id: String
-  name: String
-  email: String
-  password: String
+  id: string
+  name: string
+  email: string
+  password: string
   campaign: Campaign[]
 }
 
 export interface Email {
-  id: String
-  subject: String
-  content: String
-  campaignId: String
+  id: string
+  subject: string
+  content: string
+  campaignId: string
   campaign: Campaign[]
-  recipients: String[]
+  recipients: string[]
 }
 
 export interface Campaign {
-  id: String
-  companyName: String
-  companyDescription: String
-  productDescription: String
-  targetAudience: String
-  userId: String
+  id: string
+  companyName: string
+  companyDescription: string
+  productDescription: string
+  targetAudience: string
+  userId: string
   user: User
-  emails: Email
+  emails: Email[]
 }
 export interface RequestCampaign {
-  id: String
-  companyName: String
-  companyDescription: String
-  productDescription: String
-  targetAudience: String
-  userId: String
-  user: String
-  emails: String
+  id: string
+  companyName: string
+  companyDescription: string
+  productDescription: string
+  targetAudience: string
+  userId: string
+  user: string
+  emails: string
 }
 

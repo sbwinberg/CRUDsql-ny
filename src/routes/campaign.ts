@@ -37,15 +37,17 @@ router.get("/:id", async (req, res) => {
 router.post("/", async (req: Request<{}, {}, RequestCampaign>, res) => {
     try {
         const { companyName, companyDescription, productDescription, targetAudience, userId, user, emails } = req.body;
-        const newCampaign = await prisma.campaign.create({ data: { 
-            companyName, 
-            companyDescription, 
-            productDescription, 
-            targetAudience, 
-            userId, 
-            user, 
-            emails 
-        }});
+        const newCampaign = await prisma.campaign.create({
+            data: {
+                companyName,
+                companyDescription,
+                productDescription,
+                targetAudience,
+                userId,
+                user: { connect: { id: userId } },
+                emails
+            }
+        });
         res.json(newCampaign);
     }
     catch (error) {
@@ -60,7 +62,7 @@ router.put("/:id", async (req, res) => {
         const { name, email } = req.body;
         const updateUser = await prisma.user.update({
             where: {
-                id: parseInt(id)
+                id: id
             },
             data: {
                 name: name,
@@ -82,7 +84,7 @@ router.patch("/:id", async (req, res) => {
     try {
         currentUser = await prisma.user.findUnique({
             where: {
-                id: parseInt(id)
+                id: id
             }
         });
         if (!currentUser) res.sendStatus(404).json({ error: `can not found user with id: ${id}` })
@@ -90,7 +92,7 @@ router.patch("/:id", async (req, res) => {
         currentUser = { ...req.body };
         const updateUser = await prisma.user.update({
             where: {
-                id: parseInt(id)
+                id: id
             },
             data: {
                 name: currentUser?.name,
@@ -110,7 +112,7 @@ router.delete("/:id", async (req, res) => {
     try {
         const deleteUser = await prisma.user.delete({
             where: {
-                id: parseInt(id)
+                id: id
             }
         });
         res.status(200).json({ message: `user: "${deleteUser.name}" where deleted` });
