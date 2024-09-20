@@ -1,5 +1,5 @@
 import express from "express";
-import prisma from "../db/prisma.js";
+import prisma from "@prisma/client";
 import bcrypt from "bcrypt"
 
 const router = express.Router()
@@ -7,7 +7,7 @@ const router = express.Router()
 // get all users
 router.get("/", async (req, res) => {
     try {
-        const allUsers = await prisma.user.findMany();
+        const allUsers = await prisma.user .findMany();
         res.json(allUsers);
     }
     catch (error) {

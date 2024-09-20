@@ -1,9 +1,12 @@
 import express from "express";
-import prisma from "@prisma/client";
+import { Request, Response, NextFunction } from "express";
+import { PrismaClient } from "@prisma/client";
+import { RequestCampaign } from "../types/types"
 
+const prisma = new PrismaClient();
 const router = express.Router()
 
-// get all users
+// get all campaigns
 router.get("/", async (req, res) => {
     try {
         const allUsers = await prisma.user.findMany();
@@ -14,13 +17,13 @@ router.get("/", async (req, res) => {
     }
 });
 
-// get user by id
+// get campaign by id
 router.get("/:id", async (req, res) => {
     const { id } = req.params;
     try {
         const currentUser = await prisma.user.findUnique({
             where: {
-                id: parseInt(id)
+                id: id
             }
         });
         currentUser ? res.status(200).json(currentUser) : res.status(404).json({ error: "User not found" });
@@ -30,12 +33,20 @@ router.get("/:id", async (req, res) => {
     }
 });
 
-// create new user
-router.post("/", async (req, res) => {
+// create new campaign
+router.post("/", async (req: Request<{}, {}, RequestCampaign>, res) => {
     try {
-        const { name, email } = req.body;
-        const user = await prisma.user.create({ data: { name, email } });
-        res.json(user);
+        const { companyName, companyDescription, productDescription, targetAudience, userId, user, emails } = req.body;
+        const newCampaign = await prisma.campaign.create({ data: { 
+            companyName, 
+            companyDescription, 
+            productDescription, 
+            targetAudience, 
+            userId, 
+            user, 
+            emails 
+        }});
+        res.json(newCampaign);
     }
     catch (error) {
         res.status(400).json({ error: "Unable to create user" });

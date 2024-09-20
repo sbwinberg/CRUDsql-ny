@@ -1,33 +1,38 @@
-// Define the interface for the request body
-export interface Post {
-  post_id?: number;
-  post_user_id: number;
-  post_content: string;
-  post_date: string;
-  post_tag?: string;
-}
-
 export interface User {
-  id?: number;
-  user_name: string;
-  email: string
-  password: string;
-  role: userRole;
+  id: String
+  name: String
+  email: String
+  password: String
+  campaign: Campaign[]
 }
 
-export interface createUserResponse {
-  message: string
-  user: User;
+export interface Email {
+  id: String
+  subject: String
+  content: String
+  campaignId: String
+  campaign: Campaign[]
+  recipients: String[]
 }
 
-declare global {
-  namespace Express {
-    interface User {
-      id: number;
-      username: string;
-      role: string;
-    }
-  }
+export interface Campaign {
+  id: String
+  companyName: String
+  companyDescription: String
+  productDescription: String
+  targetAudience: String
+  userId: String
+  user: User
+  emails: Email
+}
+export interface RequestCampaign {
+  id: String
+  companyName: String
+  companyDescription: String
+  productDescription: String
+  targetAudience: String
+  userId: String
+  user: String
+  emails: String
 }
 
-type userRole = "user" | "admin" | "editor"
