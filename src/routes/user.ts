@@ -1,5 +1,6 @@
 import express from "express";
 import prisma from "../db/prisma.js";
+import bcrypt from "bcrypt"
 
 const router = express.Router()
 
@@ -33,8 +34,10 @@ router.get("/:id", async (req, res) => {
 // create new user
 router.post("/", async (req, res) => {
     try {
-        const { name, email } = req.body;
-        const user = await prisma.user.create({ data: { name, email } });
+        const { name, email, password } = req.body;
+        const salt = bcrypt.genSaltSync(10)
+        const hashedPW = bcrypt.hashSync(password, salt)
+        const user = await prisma.user.create({ data: { name, email, hashedPW, campaign: [] } });
         res.json(user);
     }
     catch (error) {
