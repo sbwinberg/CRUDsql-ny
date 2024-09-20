@@ -1,108 +1,73 @@
-import passport from "passport";
-import { Strategy as GithubStrategy } from "passport-github2";
-import pool from "../database/db";
+// // import { func } from "joi";
 
-if (!process.env.GITHUB_CLIENT_ID || !process.env.GITHUB_CLIENT_SECRET) {
-  throw new Error(
-    "GitHub OAuth credentials are not set in the environment variables."
-  );
+// const passport = require('passport');
+// const GitHubStrategy = require('passport-github2').Strategy;
+
+// export interface UserProfile {
+//   id: string;
+//   username: string;
+//   displayName: string;
+//   profileUrl: string;
+//   emails: Array<{ value: string }>;
+// }
+
+// passport.use(new GitHubStrategy({
+//   clientID: 'GITHUB_CLIENT_ID',
+//   clientSecret: 'GITHUB_CLIENT_SECRET',
+//   callbackURL: "http://localhost:1337/auth/github/callback"
+// },
+//   function (accessToken: string, refreshToken: string, profile: any, done:(err: any, user?: UserProfile | null) => void) => {
+  
+//     try {
+//       const user: UserProfile = {
+//         id: profile.id,
+//         username: profile.username || profile.displayName,
+//         displayName: profile.displayName,
+//         profileUrl: profile.profileUrl,
+//         emails: profile.emails || []
+//       };
+//       return done(null, user);
+//     } catch (err) {
+//       return done(err);
+//     }
+//   }
+// ));
+
+import passport from 'passport';
+import { Strategy as GitHubStrategy } from 'passport-github2';
+
+// Definiera interfacet för UserProfile
+export interface UserProfile {
+  id: string;
+  username: string;
+  displayName: string;
+  profileUrl: string;
+  emails: Array<{ value: string }>;
 }
 
-passport.use(
-  new GithubStrategy(
-    {
-      clientID: process.env.GITHUB_CLIENT_ID,
-      clientSecret: process.env.GITHUB_CLIENT_SECRET,
-      callbackURL: "http://localhost:3000/api/auth/github/callback",
-    },
-    async (
-      accessToken: string,
-      refreshToken: string,
-      profile: any,
-      done: any
-    ) => {
-      try {
-        // First, check if the user already exists
-        const existingUser = await pool.query(
-          'SELECT * FROM "user" WHERE username = $1',
-          [profile.username]
-        );
+// Använd GitHub-strategin
+passport.use(new GitHubStrategy({
+  clientID: 'GITHUB_CLIENT_ID', // Byt ut mot din riktiga client ID
+  clientSecret: 'GITHUB_CLIENT_SECRET', // Byt ut mot din riktiga client secret
+  callbackURL: "http://localhost:1337/auth/github/callback"
+},
+  (accessToken: string, refreshToken: string, profile: any, done: (err: any, user?: UserProfile | null) => void) => {
+    try {
+      // Logga profil för felsökning
+      console.log(profile);
 
-        if (existingUser.rows.length > 0) {
-          return done(null, existingUser.rows[0]);
-        }
+      const user: UserProfile = {
+        id: profile.id,
+        username: profile.username || profile.displayName,
+        displayName: profile.displayName,
+        profileUrl: profile.profileUrl || '', // Kontrollera att detta finns
+        emails: profile.emails || [] // Kontrollera att detta finns
+      };
 
-        // User doesn't exist, insert a new user
-        const newUser = await pool.query(
-          'INSERT INTO "user" (username, role, auth_type) VALUES ($1, $2, $3) RETURNING *',
-          [profile.username, "user", "github"]
-        );
-        return done(null, newUser.rows[0]);
-      } catch (error) {
-        console.error("Error in GitHub strategy:", error);
-        return done(error);
-      }
+      return done(null, user); // Skicka den skapade användaren
+    } catch (err) {
+      console.error('Error during authentication', err);
+      return done(err); // Skicka fel
     }
-  )
-);
-
-// passport.use(
-//   new GitHubStrategy(
-//     {
-//       clientID: process.env.GITHUB_CLIENT_ID,
-//       clientSecret: process.env.GITHUB_CLIENT_SECRET,
-//       callbackURL: "http://localhost:3000/api/auth/github/callback",
-//     },
-//     async (
-//       accessToken: string,
-//       refreshToken: string,
-//       profile: any,
-//       done: any
-//     ) => {
-//       try {
-//         // Kollar om användaren redan finns i databasen
-//         const existingUser = await pool.query(
-//           'SELECT * FROM "user" WHERE username = $1',
-//           [profile.username]
-//         );
-
-//         if (existingUser.rows.length > 0) {
-//           // Användaren finns redan, returnera användaren
-//           return done(null, existingUser.rows[0]);
-//         } else {
-//           // Användaren finns inte, skapa en ny användare
-//           const newUser = await pool.query(
-//             'INSERT INTO "user" (username, role, auth_type) VALUES ($1, $2, $3) RETURNING *',
-//             [profile.username, "user", "github"]
-//           );
-
-//           return done(null, newUser.rows[0]);
-//         }
-//       } catch (error) {
-//         console.error("Error in GitHub strategy:", error);
-//         return done(error);
-//       }
-//     }
-//   )
-// );
-
-// Serialization and deserialization for sessions
-passport.serializeUser((user: any, done: any) => {
-  done(null, user.id);
-});
-
-passport.deserializeUser(async (id: number, done) => {
-  try {
-    const result = await pool.query(
-      'SELECT id, username, role FROM "user" WHERE id = $1',
-      [id]
-    );
-    const user = result.rows[0];
-    console.log("deserilize user", user);
-    done(null, user);
-  } catch (error) {
-    done(error, null);
   }
-});
-
-export default passport;
+));
