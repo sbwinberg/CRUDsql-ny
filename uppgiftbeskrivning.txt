@@ -19,3 +19,25 @@
 5. Implementera validering med express-validator:
 ○ Lägg till validering på all inkommande data i era routes, inklusive det nya e-postfältet
 ○ Säkerställ att användarinput är korrekt formaterad och säker
+
+
+
+
+
+Använd Prisma för att definiera datamodeller:
+○ User-modell (för autentisering)
+○ Campaign-modell (för marknadsföringskampanjer)
+2. Skapa one to many relation mellan User och Campaign
+3. Skapa one to many relation mellan Campaign och Email
+4. Campaign modellen ska innehålla:
+○ CompanyName
+○ companyDescription
+○ productDescription
+○ targetAudience
+○ emails
+5. Emails modellen ska innehålla:
+○ subject
+○ content
+○ compaingId
+○ Campaign
+○ recipients
