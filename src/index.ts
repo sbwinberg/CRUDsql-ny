@@ -1,7 +1,7 @@
 import express from "express";
 import { userRouter } from "./routes/user";
 import { landingpage } from "./routes";
-import { postRouter } from "./routes/post";
+import { postRouter } from "./routes/campaign";
 import { errorHandler, appErrorCathing } from "./middleware/errorCatching";
 import { specRouter } from "./routes/spec";
 import { checkAuthRoutes } from "./routes/testRoutesCheckAuthorization";
