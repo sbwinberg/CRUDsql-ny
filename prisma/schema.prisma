@@ -20,7 +20,7 @@ model User {
   name     String
   email    String     @unique
   password String
-  Campaign Campaign[]
+  campaign Campaign[] 
 }
 
 model Campaign {
