@@ -1,9 +1,10 @@
 import express from "express";
 import { Request, Response, NextFunction } from "express";
-import { PrismaClient } from "@prisma/client";
 import { RequestCampaign } from "../types/types"
 
-const prisma = new PrismaClient();
+// PrismaClient
+import { prisma } from "../prismaclient/prismaclient"
+
 const router = express.Router()
 
 // get all campaigns
@@ -133,4 +134,4 @@ router.delete("/:id", async (req, res) => {
     }
 });
 
-export { router as campaignRoutes } 
+export { router as campaignRoutes }

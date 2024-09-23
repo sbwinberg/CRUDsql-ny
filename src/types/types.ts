@@ -38,6 +38,11 @@ export interface RequestCampaign {
     recipients: string[];
   }[];
 }
+export interface RequestUser {
+  name: string,
+  email: string,
+  password: string
+}
 
 // interface for githubStrategy
 export interface UserProfile {
