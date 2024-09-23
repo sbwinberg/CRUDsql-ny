@@ -1,22 +1,19 @@
 import express from "express";
-import { userRouter } from "./routes/user";
-import { landingpage } from "./routes";
-import { postRouter } from "./routes/campaign";
-import { errorHandler, appErrorCathing } from "./middleware/errorCatching";
-import { specRouter } from "./routes/spec";
-import { checkAuthRoutes } from "./routes/testRoutesCheckAuthorization";
-import { loginRouter } from "./routes/login";
-
+import { errorHandler } from "./middleware/errorCatching";
 import "./authStrategies/local-strategy";
+
+//routes
+import { landingpage } from "./routes";
+import { campaignRoutes } from "./routes/campaign";
+import { loginRouter } from "./routes/login";
+import { checkAuthRoutes } from "./routes/testRoutesCheckAuthorization";
 
 const app = express();
 app.use(express.json());
-app.use("/", userRouter);
-app.use("/", postRouter);
 app.use("/", landingpage);
-app.use("/", specRouter);
-app.use("/", checkAuthRoutes); // test
+app.use("/", campaignRoutes);
 app.use("/", loginRouter); // test login
+app.use("/", checkAuthRoutes); // test
 app.use(errorHandler);
 // app.use(appErrorCathing);
 
