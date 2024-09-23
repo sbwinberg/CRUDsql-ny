@@ -12,4 +12,4 @@ SERVER_HOSTNAME=localhost
 # API endpoints
 campaign.ts
 http://localhost:1337/campaign			        GET, POST
-http://localhost:1337/campaign/:id	            PUT, PATCH, DELETE
+http://localhost:1337/campaign/:id	            GET, PUT, DELETE
