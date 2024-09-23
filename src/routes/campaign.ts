@@ -66,71 +66,71 @@ router.post("/", async (req: Request<{}, {}, RequestCampaign>, res) => {
 });
 
 // update user after id
-router.put("/:id", async (req, res) => {
-    const { id } = req.params;
-    try {
-        const { name, email } = req.body;
-        const updateUser = await prisma.user.update({
-            where: {
-                id: id
-            },
-            data: {
-                name: name,
-                email: email
-            }
-        })
-        res.json(updateUser);
-    }
-    catch (error) {
-        res.status(400).json({ error: `Unable to update user with id: ${id}` });
-    }
-});
+// router.put("/:id", async (req, res) => {
+//     const { id } = req.params;
+//     try {
+//         const { name, email } = req.body;
+//         const updateUser = await prisma.user.update({
+//             where: {
+//                 id: id
+//             },
+//             data: {
+//                 name: name,
+//                 email: email
+//             }
+//         })
+//         res.json(updateUser);
+//     }
+//     catch (error) {
+//         res.status(400).json({ error: `Unable to update user with id: ${id}` });
+//     }
+// });
 
 // patch user after id
-router.patch("/:id", async (req, res) => {
-    const { id } = req.params;
-    let currentUser;
+// router.patch("/:id", async (req, res) => {
+//     const { id } = req.params;
+//     let currentUser;
 
-    try {
-        currentUser = await prisma.user.findUnique({
-            where: {
-                id: id
-            }
-        });
-        if (!currentUser) res.sendStatus(404).json({ error: `can not found user with id: ${id}` })
+//     try {
+//         currentUser = await prisma.user.findUnique({
+//             where: {
+//                 id: id
+//             }
+//         });
+//         if (!currentUser) res.sendStatus(404).json({ error: `can not found user with id: ${id}` })
 
-        currentUser = { ...req.body };
-        const updateUser = await prisma.user.update({
-            where: {
-                id: id
-            },
-            data: {
-                name: currentUser?.name,
-                email: currentUser?.email
-            }
-        })
-        res.json(updateUser);
-    }
-    catch (error) {
-        res.status(400).json({ error: `Unable to update user with id: ${id}` });
-    }
-});
+//         currentUser = { ...req.body };
+//         const updateUser = await prisma.user.update({
+//             where: {
+//                 id: id
+//             },
+//             data: {
+//                 name: currentUser?.name,
+//                 email: currentUser?.email
+//             }
+//         })
+//         res.json(updateUser);
+//     }
+//     catch (error) {
+//         res.status(400).json({ error: `Unable to update user with id: ${id}` });
+//     }
+// });
 
 // delete user by id
-router.delete("/:id", async (req, res) => {
-    const { id } = req.params;
-    try {
-        const deleteUser = await prisma.user.delete({
-            where: {
-                id: id
-            }
-        });
-        res.status(200).json({ message: `user: "${deleteUser.name}" where deleted` });
-    }
-    catch (error) {
-        res.status(400).json({ error: `Unable to delete user with id: "${id}"` });
+// router.delete("/:id", async (req, res) => {
+//     const { id } = req.params;
+//     try {
+//         const deleteUser = await prisma.user.delete({
+//             where: {
+//                 id: id
+//             }
+//         });
+//         res.status(200).json({ message: `user: "${deleteUser.name}" where deleted` });
+//     }
+//     catch (error) {
+//         res.status(400).json({ error: `Unable to delete user with id: "${id}"` });
 
-    }
-});
+//     }
+// });
 
 export { router as campaignRoutes } 
