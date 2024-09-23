@@ -9,11 +9,11 @@ const router = express.Router()
 // get all campaigns
 router.get("/", async (req, res) => {
     try {
-        const allUsers = await prisma.user.findMany();
-        res.json(allUsers);
+        const allCampaign = await prisma.campaign.findMany();
+        res.json(allCampaign);
     }
     catch (error) {
-        res.status(400).json({ error: "Unable to get all users" });
+        res.status(400).json({ error: "Unable to get all campaign" });
     }
 });
 
@@ -21,37 +21,47 @@ router.get("/", async (req, res) => {
 router.get("/:id", async (req, res) => {
     const { id } = req.params;
     try {
-        const currentUser = await prisma.user.findUnique({
+        const currentCampaign = await prisma.campaign.findUnique({
             where: {
                 id: id
             }
         });
-        currentUser ? res.status(200).json(currentUser) : res.status(404).json({ error: "User not found" });
+        currentCampaign ? res.status(200).json(currentCampaign) : res.status(404).json({ error: "campaign not found" });
     }
     catch (error) {
-        res.status(400).json({ error: `can not get user with id: ${id}` })
+        res.status(400).json({ error: `can not get campaign with id: ${id}` })
     }
 });
 
 // create new campaign
 router.post("/", async (req: Request<{}, {}, RequestCampaign>, res) => {
     try {
-        const { companyName, companyDescription, productDescription, targetAudience, userId, user, emails } = req.body;
+        const { companyName, companyDescription, productDescription, targetAudience, userId, emails } = req.body;
         const newCampaign = await prisma.campaign.create({
             data: {
                 companyName,
                 companyDescription,
                 productDescription,
                 targetAudience,
-                userId,
                 user: { connect: { id: userId } },
-                emails
+                emails: {
+                    create: emails.map(email => ({
+                        subject: email.subject,
+                        content: email.content,
+                        recipients: email.recipients
+                    }))
+                }
+            },
+            include: {
+                emails: true,
+                user: true
             }
         });
         res.json(newCampaign);
     }
     catch (error) {
-        res.status(400).json({ error: "Unable to create user" });
+        console.error("Error creating campaign:", error);
+        res.status(400).json({ error: "Unable to create campaign" });
     }
 });
 

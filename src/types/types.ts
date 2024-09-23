@@ -25,14 +25,17 @@ export interface Campaign {
   user: User
   emails: Email[]
 }
+
 export interface RequestCampaign {
-  id: string
-  companyName: string
-  companyDescription: string
-  productDescription: string
-  targetAudience: string
-  userId: string
-  user: string
-  emails: string
+  companyName: string;
+  companyDescription: string;
+  productDescription: string;
+  targetAudience: string;
+  userId: string;
+  emails: {
+    subject: string;
+    content: string;
+    recipients: string[];
+  }[];
 }
 
