@@ -39,3 +39,12 @@ export interface RequestCampaign {
   }[];
 }
 
+// interface for githubStrategy
+export interface UserProfile {
+  id: string;
+  username: string;
+  displayName: string;
+  profileUrl: string;
+  emails: Array<{ value: string }>;
+}
+

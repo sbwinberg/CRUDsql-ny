@@ -1,14 +1,7 @@
 import passport from 'passport';
 import { Strategy as GitHubStrategy } from 'passport-github2';
+import { UserProfile } from '../types/types';
 
-// Definiera interfacet för UserProfile
-export interface UserProfile {
-  id: string;
-  username: string;
-  displayName: string;
-  profileUrl: string;
-  emails: Array<{ value: string }>;
-}
 
 // Använd GitHub-strategin
 passport.use(new GitHubStrategy({
