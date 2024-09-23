@@ -29,11 +29,11 @@ passport.deserializeUser(function (obj: any, done) {
 })
 
 // ROUTES
+app.use(errorHandler);
 app.use(express.json());
 app.use("/campaign", campaignRoutes);
 app.use("/user", userRouter)
 app.use("/auth/github", authRouter)
-app.use(errorHandler);
 
 const SERVER_PORT = process.env.SERVER_PORT || 1337;
 
