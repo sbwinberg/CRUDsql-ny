@@ -3,14 +3,12 @@ import { errorHandler } from "./middleware/errorCatching";
 import "./authStrategies/local-strategy";
 
 //routes
-import { landingpage } from "./routes";
 import { campaignRoutes } from "./routes/campaign";
 import { loginRouter } from "./routes/login";
 import { checkAuthRoutes } from "./routes/testRoutesCheckAuthorization";
 
 const app = express();
 app.use(express.json());
-app.use("/", landingpage);
 app.use("/campaign", campaignRoutes);
 // app.use("/", loginRouter); // test login
 // app.use("/", checkAuthRoutes); // test

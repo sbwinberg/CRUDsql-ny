@@ -1,26 +1,31 @@
+import { PrismaClient } from '@prisma/client';
 import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
-import pool from "../database/db";
 import bcrypt from "bcrypt";
-import { Response, Request, NextFunction } from "express";
+import { Response, Request, NextFunction } from "express"; // används i utkommenterad kod längst ned
 
 //Types
-import { User } from "../types/types";
+import { User } from "../types/types"; // används i utkommenterad kod längst ned
 
+const prisma = new PrismaClient();
 
 // Här definerar vi vår strategy för passport, I detta fall använder vi LocalStrategy.
 // Vi kan använda oss av flera strategys samtidigt, som tex Oauth med google, facebook, discord osv.
 passport.use(
-  new LocalStrategy(async (username, password, done) => {
+  new LocalStrategy(async (useremail, password, done) => {
     try {
-      const result = await pool.query('SELECT * FROM "user" WHERE username = $1', [username]);
-      const user = result.rows[0];
-      if (!user) return done(null, false, { message: "Incorrect username or password" });
+      const user = await prisma.user.findUnique({
+        where: { email: useremail }
+      });
+
+      if (!user) return done(null, false, { message: "Incorrect useremail" });
 
       const isMatch = await bcrypt.compare(password, user.password);
-      return !isMatch ? done(null, false, { message: "Incorrect username or password" }) : done(null, { id: user.id, username: user.username, role: user.role });
-    }
-    catch (error) {
+
+      if (!isMatch) return done(null, false, { message: "Incorrect password, or pw dont match with user" });
+
+      return done(null, { id: user.id, username: user.name });
+    } catch (error) {
       return done(error);
     }
   })
@@ -33,29 +38,31 @@ passport.serializeUser((user: any, done) => {
 });
 
 //deserializeUser använder vi för att hämta vårt user object från vår sparade session.
-passport.deserializeUser(async (id: number, done) => {
+passport.deserializeUser(async (id: string, done) => {
   try {
-    const result = await pool.query('SELECT id, username, role FROM "user" WHERE id = $1', [id]);
-    const user = result.rows[0];
+    const user = await prisma.user.findUnique({
+      where: { id: id },
+      select: { id: true, name: true }
+    });
+
     console.log("deserialize user", user);
     done(null, user);
-  } 
-  catch (error) {
+  } catch (error) {
     done(error, null);
   }
 });
 
-export function authorize(...allowed: string[]) {
-  return (req: Request, res: Response, next: NextFunction) => {
-    console.log("user from authorize:", req.user);
-    console.log("allowed:", allowed);
-    const user = req.user as User | undefined;
-    if (req.isAuthenticated() && user && allowed.includes(user.role)) {
-      next();
-    } else {
-      res.status(403).json({ message: "unauthorized" });
-    }
-  };
-}
+// export function authorize(...allowed: string[]) {
+//   return (req: Request, res: Response, next: NextFunction) => {
+//     console.log("user from authorize:", req.user);
+//     console.log("allowed:", allowed);
+//     const user = req.user as User | undefined;
+//     if (req.isAuthenticated() && user && allowed.includes(user.role)) {
+//       next();
+//     } else {
+//       res.status(403).json({ message: "unauthorized" });
+//     }
+//   };
+// }
 
 export default passport;
