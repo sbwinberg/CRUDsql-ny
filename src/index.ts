@@ -5,7 +5,6 @@ import "./authStrategies/local-strategy";
 //routes
 import { campaignRoutes } from "./routes/campaign";
 import { loginRouter } from "./routes/login";
-import { checkAuthRoutes } from "./routes/testRoutesCheckAuthorization";
 
 const app = express();
 app.use(express.json());
