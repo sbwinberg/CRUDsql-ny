@@ -11,9 +11,9 @@ import { checkAuthRoutes } from "./routes/testRoutesCheckAuthorization";
 const app = express();
 app.use(express.json());
 app.use("/", landingpage);
-app.use("/", campaignRoutes);
-app.use("/", loginRouter); // test login
-app.use("/", checkAuthRoutes); // test
+app.use("/campaign", campaignRoutes);
+// app.use("/", loginRouter); // test login
+// app.use("/", checkAuthRoutes); // test
 app.use(errorHandler);
 // app.use(appErrorCathing);
 
