@@ -9,6 +9,9 @@ DATABASE_URL=postgresql://postgres:YOURPASSWORD@localhost:5432/YOURDATABAS?schem
 SERVER_PORT=1337
 SERVER_HOSTNAME=localhost
 
+GITHUB_CLIENT_ID=
+GITHUB_CLIENT_SECRET=
+
 # API endpoints
 campaign.ts
 http://localhost:1337/campaign			        GET, POST
