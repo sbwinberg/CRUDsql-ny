@@ -1,9 +1,10 @@
 import express from "express";
 import { Request, Response, NextFunction } from "express";
-import { PrismaClient } from "@prisma/client";
 import { RequestCampaign } from "../types/types"
 
-const prisma = new PrismaClient();
+// PrismaClient
+import { prisma } from "../prismaclient/prismaclient"
+
 const router = express.Router()
 
 // get all campaigns
@@ -55,15 +56,52 @@ router.post("/", async (req: Request<{}, {}, RequestCampaign>, res) => {
             include: {
                 emails: true,
                 user: true
-            }
+            },
+            // log: ['query', 'info', 'warn', 'error'],
         });
         res.json(newCampaign);
     }
-    catch (error) {
+    catch (error: any) {
         console.error("Error creating campaign:", error);
-        res.status(400).json({ error: "Unable to create campaign" });
+        res.status(400).json({ error: error.message || "Unable to create campaign" });
     }
 });
+
+router.put("/:id", async (req, res) => {
+    const { id } = req.params;
+    try {
+        const { companyName, companyDescription, productDescription, targetAudience } = req.body;
+        const updateCampaign = await prisma.campaign.update({
+            where: {
+                id: id
+            },
+            data: {
+                companyName, companyDescription, productDescription, targetAudience
+            }
+        });
+        res.json(updateCampaign);
+    }
+    catch (error) {
+        res.status(400).json({ error: `Unable to update campaign with id: ${id}` });
+    }
+});
+
+router.delete("/:id", async (req, res) => {
+    const { id } = req.params;
+    try {
+        const deleteCampaign = await prisma.campaign.delete({
+            where: {
+                id: id
+            }
+        });
+        res.status(200).json({ message: `campaign: "${deleteCampaign.companyName}" where deleted` });   
+    }
+    catch (error) {
+        res.status(400).json({ error: `Unable to delete campaign with id: ${id}` });
+    }
+});
+
+export { router as campaignRoutes }
 
 // update user after id
 // router.put("/:id", async (req, res) => {
@@ -133,4 +171,3 @@ router.post("/", async (req: Request<{}, {}, RequestCampaign>, res) => {
 //     }
 // });
 
-export { router as campaignRoutes } 

@@ -39,30 +39,6 @@ function errorHandler(
   res.status(500).json({ error: "Error: 500. Unexpected error" });
 }
 
-// app.get("/error", (req, res, next) => {
-//   try {
-//     throw new Error("This is and intentional error");
-//   } catch (err) {
-//     next(err);
-//   }
-// });
-
-// app.get("/validation-error", (req, res, next) => {
-//   try {
-//     throw new ValidationError("Invalid input data provided");
-//   } catch (err) {
-//     next(err);
-//   }
-// });
-
-// app.get("/not-found", (req, res, next) => {
-//   try {
-//     throw new NotFoundError("Resource not found");
-//   } catch (err) {
-//     next(err);
-//   }
-// });
-
 export {errorHandler};
 export {app as appErrorCathing};
 
