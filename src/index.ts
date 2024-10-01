@@ -31,7 +31,7 @@ passport.deserializeUser(function (obj: any, done) {
 // ROUTES
 app.use(express.json());
 app.use("/campaign", campaignRoutes);
-app.use("/user", userRouter)
+app.use("/users", userRouter)
 app.use("/auth/github", authRouter)
 app.use(errorHandler);
 
