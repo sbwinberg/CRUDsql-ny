@@ -3,6 +3,7 @@ import Input from "@/components/ui/LoginInput";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import Checkbox from "@/components/ui/LoginCheckbox";
+import { useState } from "react";
 type IconProps = React.SVGProps<SVGSVGElement>;
 const LockIcon = (props: IconProps) => (
   <svg
@@ -66,51 +67,58 @@ const Header = () => (
     </div>
   </header>
 );
-
-const LoginForm = () => (
-  <form className="space-y-4">
-    <div>
-      <label htmlFor="email" className="block text-sm font-medium">
-        Email
-      </label>
-      <div className="relative mt-1">
-        <Input
-          type="email"
-          id="email"
-          placeholder="m@example.com"
-          className="w-full pl-3 pr-10"
-        />
-        <MailIcon className="absolute right-2 top-2.5 h-4 w-4 text-red-500" />
-      </div>
-    </div>
-    <div>
-      <label htmlFor="password" className="block text-sm font-medium">
-        Password
-      </label>
-      <div className="relative mt-1">
-        <Input
-          type="password"
-          id="password"
-          placeholder="••••••••"
-          className="w-full pl-3 pr-10"
-        />
-        <LockIcon className="absolute right-2 top-2.5 h-4 w-4 text-red-500" />
-      </div>
-    </div>
-    <div className="flex items-center justify-between">
-      <div className="flex items-center">
-        <Checkbox id="remember" />
-        <label htmlFor="remember" className="ml-2 text-sm">
-          Remember me
+const LoginForm = () => {
+  const [rememberMe, setRememberMe] = useState(false);
+  return (
+    <form className="space-y-4">
+      <div>
+        <label htmlFor="email" className="block text-sm font-medium">
+          Email
         </label>
+        <div className="relative mt-1">
+          <Input
+            type="email"
+            id="email"
+            placeholder="m@example.com"
+            className="w-full pl-3 pr-10"
+          />
+          <MailIcon className="absolute right-2 top-2.5 h-4 w-4 text-red-500" />
+        </div>
       </div>
-      <Link href="#" className="text-sm text-blue-600" prefetch={false}>
-        Forgot Password?
-      </Link>
-    </div>
-    <Button className="w-full mt-4 bg-black text-white">Login</Button>
-  </form>
-);
+      <div>
+        <label htmlFor="password" className="block text-sm font-medium">
+          Password
+        </label>
+        <div className="relative mt-1">
+          <Input
+            type="password"
+            id="password"
+            placeholder="••••••••"
+            className="w-full pl-3 pr-10"
+          />
+          <LockIcon className="absolute right-2 top-2.5 h-4 w-4 text-red-500" />
+        </div>
+      </div>
+      <div className="flex items-center justify-between">
+        <div className="flex items-center">
+          <Checkbox
+            id="remember"
+            label="Remember me"
+            checked={rememberMe}
+            onCheckedChange={(checked) => setRememberMe(checked)}
+          />
+          <label htmlFor="remember" className="ml-2 text-sm">
+            Remember me
+          </label>
+        </div>
+        <Link href="#" className="text-sm text-blue-600" prefetch={false}>
+          Forgot Password?
+        </Link>
+      </div>
+      <Button className="w-full mt-4 bg-black text-white">Login</Button>
+    </form>
+  );
+};
 
 const LoginComponent = () => {
   return (
