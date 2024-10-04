@@ -4,7 +4,7 @@ import { Register } from './components/component/register'
 import CreateEmail from './routes/create-email'
 // import CreateCampaign from './routes/Create-Campaign'
 import GeneratedEmail from './routes/generated-email'
-// import SpecificCampaign from './routes/Specific-campaign'
+// import { SpecificCampaign } from './components/specific-campaign'
 import Campaign from './routes/campaign'
 
 function App() {
