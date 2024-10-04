@@ -1,4 +1,4 @@
-import { SpecificCampaign } from "@/components/specific-campaign";
+import { SpecificCampaign } from "@/components/Specific-campaign";
 
 export function SpecificCampaignPage() {
     return (
