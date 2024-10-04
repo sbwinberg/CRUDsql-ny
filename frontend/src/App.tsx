@@ -6,10 +6,12 @@ import CreateEmail from './routes/create-email'
 import GeneratedEmail from './routes/generated-email'
 // import { SpecificCampaign } from './components/specific-campaign'
 import Campaign from './routes/campaign'
+import { Homepage } from './routes/Home'
 
 function App() {
   return (
     <Routes>
+      <Route path='/' element={<Homepage/>}/>
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
      <Route path="/campaign" element={<Campaign />} />
