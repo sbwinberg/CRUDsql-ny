@@ -1,6 +1,6 @@
 import React from "react";
 import Input from "@/components/ui/LoginInput";
-import Link from "next/link";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import Checkbox from "@/components/ui/LoginCheckbox";
 import { useState } from "react";
@@ -111,7 +111,7 @@ const LoginForm = () => {
             Remember me
           </label>
         </div>
-        <Link href="#" className="text-sm text-blue-600" prefetch={false}>
+        <Link to="#" className="text-sm text-blue-600">
           Forgot Password?
         </Link>
       </div>
@@ -134,7 +134,7 @@ const LoginComponent = () => {
         </div>
         <p className="mt-4 text-sm">
           Don't have an account?{" "}
-          <Link href="#" className="text-blue-600" prefetch={false}>
+          <Link to="/register" className="text-blue-600">
             Register
           </Link>
         </p>
