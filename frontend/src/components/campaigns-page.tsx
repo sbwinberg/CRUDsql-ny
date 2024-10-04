@@ -97,4 +97,4 @@ export function CampaignsPageComponent() {
   )
 }
 
-export default CampaignsPageComponent
+export default CampaignsPageComponent;
