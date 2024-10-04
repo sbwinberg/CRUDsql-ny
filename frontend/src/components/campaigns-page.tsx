@@ -1,6 +1,7 @@
 "'use client'"
 
 import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -12,19 +13,27 @@ interface Campaign {
   description: string
   date: string
   emails: number
+  id: number
 }
 
 const campaigns: Campaign[] = [
-  { title: "Summer Promotion", description: "Promote our new summer product line", date: "June 1, 2023", emails: 5 },
-  { title: "Holiday Sale", description: "Promote our holiday product line", date: "November 15, 2023", emails: 12 },
-  { title: "Back to School", description: "Promote our back to school product line", date: "August 1, 2023", emails: 8 },
-  { title: "Spring Clearance", description: "Promote our spring clearance sale", date: "March 15, 2023", emails: 10 },
-  { title: "New Year Deals", description: "Promote our new year product line", date: "December 1, 2022", emails: 32 },
-  { title: "Fall Collection", description: "Promote our fall product line", date: "September 1, 2022", emails: 20 },
-  { title: "Winter Wonderland", description: "Promote our winter product line", date: "November 1, 2022", emails: 18 },
+  { title: "Summer Promotion", description: "Promote our new summer product line", date: "June 1, 2023", emails: 5, id: 1 },
+  { title: "Holiday Sale", description: "Promote our holiday product line", date: "November 15, 2023", emails: 12, id: 2 },
+  { title: "Back to School", description: "Promote our back to school product line", date: "August 1, 2023", emails: 8, id: 3 },
+  { title: "Spring Clearance", description: "Promote our spring clearance sale", date: "March 15, 2023", emails: 10, id: 4 },
+  { title: "New Year Deals", description: "Promote our new year product line", date: "December 1, 2022", emails: 32, id: 5 },
+  { title: "Fall Collection", description: "Promote our fall product line", date: "September 1, 2022", emails: 20, id: 6 },
+  { title: "Winter Wonderland", description: "Promote our winter product line", date: "November 1, 2022", emails: 18, id: 7 },
 ]
 
 export function CampaignsPageComponent() {
+  // Function to navigate to specific campaign
+  let navigate = useNavigate();
+  function changeRoute(id:number):void {
+    // navigate(`/campaign?id=${id}`);
+    navigate(`/campaign/${id}`);
+  }
+
   const [showForm, setShowForm] = useState(false)
 
   return (
@@ -38,7 +47,7 @@ export function CampaignsPageComponent() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
         {campaigns.map((campaign, index) => (
-          <Card key={index}>
+          <Card key={index} onClick={() => changeRoute(campaign.id)}>
             <CardHeader>
               <CardTitle>{campaign.title}</CardTitle>
             </CardHeader>
