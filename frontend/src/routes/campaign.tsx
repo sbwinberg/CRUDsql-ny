@@ -4,9 +4,8 @@ import CampaignsPageComponent from "@/components/campaigns-page";
 
 export default function CampaignPage() {
     return (
-        <div>
-            <h1>Välkommen till kampanjsidan</h1>
+        <main className="justify-center items-center">
             <CampaignsPageComponent />
-        </div>
+        </main>
     );
 }
