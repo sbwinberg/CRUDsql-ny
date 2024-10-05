@@ -107,9 +107,6 @@ const LoginForm = () => {
             checked={rememberMe}
             onCheckedChange={(checked) => setRememberMe(checked)}
           />
-          <label htmlFor="remember" className="ml-2 text-sm">
-            Remember me
-          </label>
         </div>
         <Link to="#" className="text-sm text-blue-600">
           Forgot Password?
