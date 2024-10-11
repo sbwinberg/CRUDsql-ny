@@ -42,7 +42,7 @@ router.put("/:id", async (req: Request<{id: string}, {}, Partial<RequestUser>>, 
     const { name, email, password } = req.body;
     
     const updatedUser = await prisma.user.update({
-      where: { id: parseInt(id) },
+      where: { id: id },
       data: { name, email, password }
     });
     
@@ -58,7 +58,7 @@ router.delete("/:id", async (req: Request<{id: string}>, res) => {
     const { id } = req.params;
     
     await prisma.user.delete({
-      where: { id: parseInt(id) }
+      where: { id: id }
     });
     
     res.status(204).send();
