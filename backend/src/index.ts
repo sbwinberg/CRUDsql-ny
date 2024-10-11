@@ -1,5 +1,4 @@
 import express from "express";
-import { errorHandler } from "./middleware/errorCatching";
 import passport from "passport";
 import session from "express-session";
 
@@ -31,7 +30,6 @@ passport.deserializeUser(function (obj: any, done) {
 });
 
 // ROUTES
-app.use(errorHandler);
 app.use(express.json());
 app.use("/campaign", campaignRoutes);
 app.use("/users", userRouter);
