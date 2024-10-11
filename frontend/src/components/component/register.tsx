@@ -8,8 +8,40 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { IconProps } from "@radix-ui/react-icons/dist/types";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 export function Register() {
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [repeatPassword, setRepeatPassword] = useState("");
+
+  // IMPLEMENTERA LOGIK FÖR ATT FÖRHINDRA ATT KUNNA REGISTRERA INNAN LÖSENORD MATCHAR
+  function setAndComparePassword(newPW: string): void {
+    setRepeatPassword(newPW);
+    repeatPassword === password ? console.log("Passwords match") : console.log("Passwords do not match")
+  }
+
+  function submitToDatabase(e: React.FormEvent){
+    e.preventDefault();
+
+    fetch('http://localhost:1337/users/', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        name: fullName,
+        email: email,
+        password: password
+      })
+    })
+    .then(res => res.json())
+    .then(data => console.log((data)))
+    .catch(error => console.log(error))
+  }
+  
   return (
     <div className="flex flex-col items-center justify-center min-h-screen p-4">
       <div className="max-w-md p-8 bg-white rounded shadow">
@@ -20,14 +52,26 @@ export function Register() {
             Join our email marketing platform and start growing your business.
           </p>
         </div>
-        <form className="w-full max-w-md mt-8 space-y-4">
+        <form 
+          className="w-full max-w-md mt-8 space-y-4"
+          onSubmit={(e) => submitToDatabase(e)}
+        >
           <div className="space-y-2">
             <Label htmlFor="full-name">Full Name</Label>
-            <Input id="full-name" placeholder="Enter your full name" />
+            <Input 
+              id="full-name" 
+              placeholder="Enter your full name" 
+              onChange={(e) => setFullName(e.target.value)}
+            />
           </div>
           <div className="space-y-2">
             <Label htmlFor="email">Email address</Label>
-            <Input id="email" type="email" placeholder="Enter your email" />
+            <Input 
+              id="email" 
+              type="email" 
+              placeholder="Enter your email"
+              onChange={(e) => setEmail(e.target.value)}
+            />
           </div>
           <div className="space-y-2">
             <Label htmlFor="password">Password</Label>
@@ -35,6 +79,7 @@ export function Register() {
               id="password"
               type="password"
               placeholder="Enter your password"
+              onChange={(e) => setPassword(e.target.value)}
             />
           </div>
           <div className="space-y-2">
@@ -43,6 +88,7 @@ export function Register() {
               id="confirm-password"
               type="password"
               placeholder="Confirm your password"
+              onChange={(e) => setAndComparePassword(e.target.value)}
             />
           </div>
           <Button className="w-full mt-4" variant="default">

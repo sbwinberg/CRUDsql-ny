@@ -5,9 +5,9 @@ import { UserProfile } from '../types/types';
 
 // Använd GitHub-strategin
 passport.use(new GitHubStrategy({
-  clientID: 'GITHUB_CLIENT_ID', // Byt ut mot din riktiga client ID
-  clientSecret: 'GITHUB_CLIENT_SECRET', // Byt ut mot din riktiga client secret
-  callbackURL: "http://localhost:1337/auth/github/callback"
+  clientID: process.env.GITHUB_CLIENT_ID as string,
+  clientSecret: process.env.GITHUB_CLIENT_SECRET as string,
+  callbackURL: "http://localhost:1337/auth/github"
 },
   (accessToken: string, refreshToken: string, profile: any, done: (err: any, user?: UserProfile | null) => void) => {
     try {

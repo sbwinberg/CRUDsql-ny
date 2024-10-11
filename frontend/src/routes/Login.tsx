@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import Checkbox from "@/components/ui/LoginCheckbox";
 import { useState } from "react";
+import { FaGithub } from "react-icons/fa";
+
 type IconProps = React.SVGProps<SVGSVGElement>;
 const LockIcon = (props: IconProps) => (
   <svg
@@ -113,6 +115,7 @@ const LoginForm = () => {
         </Link>
       </div>
       <Button className="w-full mt-4 bg-black text-white">Login</Button>
+      <Button className="w-full mt-4 bg-black text-white"> Login with Github <FaGithub /> </Button>
     </form>
   );
 };

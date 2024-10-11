@@ -2,6 +2,7 @@ import { Router, Request } from "express";
 import { RequestUser } from "../types/types";
 import { prisma } from "../prismaclient/prismaclient";
 import { userSchema } from "../schema/user-schema";
+import bcrypt from 'bcrypt'
 
 export const router = Router();
 
@@ -21,11 +22,15 @@ router.post("/", async (req: Request<{}, {}, RequestUser>, res) => {
       const { error } = userSchema.validate({name, email, password});
       if(error) res.status(400).json({ error: error.details });
 
+      // PW hash
+      const saltRounds = 10;
+      const hashedPW = bcrypt.hashSync(password, saltRounds)
+
       const newUser = await prisma.user.create({
           data: {
             name,
             email,
-            password
+            password: hashedPW
         }
       });
       res.json(newUser);
