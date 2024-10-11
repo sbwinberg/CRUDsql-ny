@@ -31,7 +31,7 @@ export function Register() {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
-        'COntent-Type': 'application/json'
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify({
         name: fullName,
