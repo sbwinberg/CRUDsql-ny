@@ -16,11 +16,9 @@ export function Register() {
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
 
-
-
   // IMPLEMENTERA LOGIK FÖR ATT FÖRHINDRA ATT KUNNA REGISTRERA INNAN LÖSENORD MATCHAR
-  function setAndComparePassword(repeatPassword : string): void {
-    setRepeatPassword(repeatPassword);
+  function setAndComparePassword(newPW: string): void {
+    setRepeatPassword(newPW);
     repeatPassword === password ? console.log("Passwords match") : console.log("Passwords do not match")
   }
 
