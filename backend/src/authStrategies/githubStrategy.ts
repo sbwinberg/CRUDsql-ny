@@ -7,7 +7,7 @@ import { UserProfile } from '../types/types';
 passport.use(new GitHubStrategy({
   clientID: process.env.GITHUB_CLIENT_ID as string,
   clientSecret: process.env.GITHUB_CLIENT_SECRET as string,
-  callbackURL: "http://localhost:1337/auth/github/callback"
+  callbackURL: "http://localhost:1337/auth/github"
 },
   (accessToken: string, refreshToken: string, profile: any, done: (err: any, user?: UserProfile | null) => void) => {
     try {
