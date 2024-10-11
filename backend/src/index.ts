@@ -2,6 +2,7 @@ import express from "express";
 import { errorHandler } from "./middleware/errorCatching";
 import passport from "passport";
 import session from "express-session";
+import cors from 'cors';
 
 //routes
 import { campaignRoutes } from "./routes/campaign";
@@ -21,6 +22,7 @@ app.use(
 
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(cors())
 
 passport.serializeUser(function (user, done) {
   done(null, user);
