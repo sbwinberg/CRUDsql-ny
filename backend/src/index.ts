@@ -1,6 +1,7 @@
 import express from "express";
 import passport from "passport";
 import session from "express-session";
+import dotenv from 'dotenv';
 
 //routes
 import { campaignRoutes } from "./routes/campaign";
@@ -8,6 +9,9 @@ import authRouter from "./routes/auth";
 import { router as userRouter } from "./routes/user";
 
 const app = express();
+
+
+dotenv.config();
 
 // gitHubStrategy
 app.use(
@@ -38,5 +42,5 @@ app.use("/auth/github", authRouter);
 const SERVER_PORT = process.env.SERVER_PORT || 1337;
 
 app.listen(SERVER_PORT, () => {
-  console.log("Server started on: " + SERVER_PORT);
+  console.log("Server started on: " + process.env.SERVER_PORT);
 });
