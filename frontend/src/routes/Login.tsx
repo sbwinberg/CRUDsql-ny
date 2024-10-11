@@ -71,8 +71,35 @@ const Header = () => (
 );
 const LoginForm = () => {
   const [rememberMe, setRememberMe] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+
+  function verifyLogin(e) {
+    e.preventDefault()
+    fetch('http://localhost:1337/auth/login/', {
+      method: 'POST',
+      body: JSON.stringify({
+        email: email,
+        password: password,
+      })
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log('Success:', data);
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      })
+  }
+
   return (
-    <form className="space-y-4">
+    <form onSubmit={(e)=> verifyLogin(e)} className="space-y-4">
       <div>
         <label htmlFor="email" className="block text-sm font-medium">
           Email
@@ -83,6 +110,7 @@ const LoginForm = () => {
             id="email"
             placeholder="m@example.com"
             className="w-full pl-3 pr-10"
+            onChange={(e)=> setEmail(e.target.value)}
           />
           <MailIcon className="absolute right-2 top-2.5 h-4 w-4 text-red-500" />
         </div>
@@ -97,6 +125,7 @@ const LoginForm = () => {
             id="password"
             placeholder="••••••••"
             className="w-full pl-3 pr-10"
+            onChange={(e) => setPassword(e.target.value)}
           />
           <LockIcon className="absolute right-2 top-2.5 h-4 w-4 text-red-500" />
         </div>
@@ -114,7 +143,7 @@ const LoginForm = () => {
           Forgot Password?
         </Link>
       </div>
-      <Button className="w-full mt-4 bg-black text-white">Login</Button>
+      <Button type="submit" className="w-full mt-4 bg-black text-white">Login</Button>
       <Button className="w-full mt-4 bg-black text-white"> Login with Github <FaGithub /> </Button>
     </form>
   );

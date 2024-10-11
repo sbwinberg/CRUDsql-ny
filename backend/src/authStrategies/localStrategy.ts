@@ -6,14 +6,16 @@ import passport from "passport";
 
 passport.use(new LocalStrategy(
 
-async function (email, password, done) {
+    async function (email, password, done) {
+        console.log('Vi kör localstrategy')
         // Hitta användaren i databasen med användarnamnet
         const user = await prisma.user.findUnique({
             where: {email: email},
         })
            if (!user) {
-                // Om användaren inte finns
-                return done(null, false, { message: 'Incorrect username.' });
+               // Om användaren inte finns
+               console.log('no user found')
+               return done(null, false, { message: 'Incorrect username.' });
             }
 
             // Jämför inmatat lösenord med det hasade lösenordet i databasen
@@ -21,6 +23,7 @@ async function (email, password, done) {
                 if (err) { return done(err); }
                 if (!isMatch) {
                     // Om lösenordet inte matchar
+                    console.log('wrong password')
                     return done(null, false, { message: 'Incorrect password.' });
                 }
 

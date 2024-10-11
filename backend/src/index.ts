@@ -39,7 +39,7 @@ passport.deserializeUser(function (obj: any, done) {
 app.use(express.json());
 app.use("/campaign", campaignRoutes);
 app.use("/users", userRouter);
-app.use("/auth/github", authRouter);
+app.use("/auth", authRouter);
 
 const SERVER_PORT = process.env.SERVER_PORT || 1337;
 

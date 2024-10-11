@@ -11,7 +11,7 @@ app.use(express.json());
 
 // GITHUB STRATEGY 
 
-app.get('/',
+app.get('/github',
     passport.authenticate('github'));
 
 app.get('/callback',
@@ -32,7 +32,6 @@ app.get('/profile', (req: Request, res: Response) => {
 app.post('/login', passport.authenticate('local', {
     successRedirect: '/profile',
     failureRedirect: '/login',
-    failureFlash: true
 }));
 
 app.get('/profile', (req, res) => {

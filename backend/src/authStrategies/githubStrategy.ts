@@ -1,7 +1,9 @@
 import passport from 'passport';
 import { Strategy as GitHubStrategy } from 'passport-github2';
 import { UserProfile } from '../types/types';
+import dotenv from 'dotenv';
 
+dotenv.config();
 
 // Använd GitHub-strategin
 passport.use(new GitHubStrategy({
