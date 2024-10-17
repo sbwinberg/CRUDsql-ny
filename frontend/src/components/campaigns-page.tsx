@@ -51,14 +51,26 @@ export function CampaignsPageComponent() {
     }));
   };
 
+  // genererar dagens datum
+  const todaysDate = new Date().toLocaleDateString("sv-SE", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:3000/api/campaign", {
+      const response = await axios.post("http://localhost:1337/campaign", {
         ...formData,
-        userId: "användar-id-här", // Ersätt med faktiskt användar-id
-        emails: [] // Lägg till e-postdata om det behövs
+        createdAtDate: todaysDate,
+        userId: "3c4e743f-71bf-4546-b532-cb378b9def7c", // test hårdkodad userId ska fixas med autenticering
+        emails: [] // oklart hur emails ens ska fungera?
       });
+
+
+
+
       console.log("Kampanj skapad:", response.data);
       setShowForm(false);
       // Uppdatera kampanjlistan här om det behövs
