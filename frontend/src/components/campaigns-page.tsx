@@ -17,6 +17,8 @@ interface Campaign {
   id: number
 }
 
+/* 
+// mockdata for testing
 const campaigns: Campaign[] = [
   { title: "Summer Promotion", description: "Promote our new summer product line", date: "June 1, 2023", emails: 5, id: 1 },
   { title: "Holiday Sale", description: "Promote our holiday product line", date: "November 15, 2023", emails: 12, id: 2 },
@@ -26,7 +28,7 @@ const campaigns: Campaign[] = [
   { title: "Fall Collection", description: "Promote our fall product line", date: "September 1, 2022", emails: 20, id: 6 },
   { title: "Winter Wonderland", description: "Promote our winter product line", date: "November 1, 2022", emails: 18, id: 7 },
 ]
-
+ */
 export function CampaignsPageComponent() {
   // Function to navigate to specific campaign
   let navigate = useNavigate();
