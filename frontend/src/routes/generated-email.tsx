@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { ArrowLeft, Save, Clock, Trash2, Send, X, Plus, Download } from 'lucide-react'
 
-export default function EmailPreview() {
+export function GeneratedEmail() {
   const [recipients, setRecipients] = useState(['jane.doe@example.com', 'bob.smith@example.com'])
   const [newRecipient, setNewRecipient] = useState('')
 

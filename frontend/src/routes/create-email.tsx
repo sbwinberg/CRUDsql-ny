@@ -6,7 +6,7 @@ interface Email {
   content: string
 }
 
-export default function EmailMarketingCampaign() {
+export function CreateEmail() {
   const [emails, setEmails] = useState<Email[]>([
     { subject: "Exciting New Product Launch!", content: "Dear valued customer, we're thrilled to announce our latest product that will revolutionize your daily routine. Get ready for an exclusive first look!" },
     { subject: "Limited Time Offer Inside", content: "Don't miss out on our exclusive deal! For the next 48 hours, enjoy unprecedented discounts on our entire summer collection. Act fast before this offer expires!" }
