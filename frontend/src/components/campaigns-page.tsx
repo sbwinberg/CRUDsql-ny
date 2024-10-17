@@ -1,5 +1,5 @@
 "'use client'"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -10,34 +10,25 @@ import { Link } from "react-router-dom"
 import axios from "axios";
 
 interface Campaign {
-  title: string
-  description: string
-  date: string
-  emails: number
-  id: number
+  companyName: string
+  companyDescription: string
+  createdAt: string
+  id: string
+  productDescription: string
+  targetAudience: string
+  userId: string 
+ // emails: [string]
 }
 
-/* 
-// mockdata for testing
-const campaigns: Campaign[] = [
-  { title: "Summer Promotion", description: "Promote our new summer product line", date: "June 1, 2023", emails: 5, id: 1 },
-  { title: "Holiday Sale", description: "Promote our holiday product line", date: "November 15, 2023", emails: 12, id: 2 },
-  { title: "Back to School", description: "Promote our back to school product line", date: "August 1, 2023", emails: 8, id: 3 },
-  { title: "Spring Clearance", description: "Promote our spring clearance sale", date: "March 15, 2023", emails: 10, id: 4 },
-  { title: "New Year Deals", description: "Promote our new year product line", date: "December 1, 2022", emails: 32, id: 5 },
-  { title: "Fall Collection", description: "Promote our fall product line", date: "September 1, 2022", emails: 20, id: 6 },
-  { title: "Winter Wonderland", description: "Promote our winter product line", date: "November 1, 2022", emails: 18, id: 7 },
-]
- */
 export function CampaignsPageComponent() {
   // Function to navigate to specific campaign
   let navigate = useNavigate();
-  function changeRoute(id: number): void {
+  function changeRoute(id: string): void {
     // navigate(`/campaign?id=${id}`);
     navigate(`/campaign/${id}`);
   }
-
-  const [showForm, setShowForm] = useState(false)
+  const [campaigns, setCampaigns] = useState<Campaign[]>([]);
+  const [showForm, setShowForm] = useState(false);
   const [formData, setFormData] = useState({
     companyName: "",
     companyDescription: "",
@@ -71,8 +62,6 @@ export function CampaignsPageComponent() {
       });
 
 
-
-
       console.log("Kampanj skapad:", response.data);
       setShowForm(false);
       // Uppdatera kampanjlistan här om det behövs
@@ -80,6 +69,21 @@ export function CampaignsPageComponent() {
       console.error("Fel vid skapande av kampanj:", error);
     }
   };
+
+  // hämtar alla campaigns från databasen
+  useEffect(() => {
+    const fetchCampaigns = async () => {
+      try {
+        const response = await axios.get("http://localhost:1337/campaign")
+        setCampaigns(response.data)
+        console.log(response.data, "campaigns")
+        console.log(campaigns, "campaigns")
+      } catch (error) {
+        console.error("Fel vid hämtning av kampanjer:", error)
+      }
+    }
+    fetchCampaigns()
+  }, [])
 
   return (
     <div className="container mx-auto p-4">
@@ -92,20 +96,20 @@ export function CampaignsPageComponent() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-        {campaigns.map((campaign, index) => (
-          <Card key={index} onClick={() => changeRoute(campaign.id)}>
+        {campaigns.map((campaign) => (
+          <Card key={campaign.id} onClick={() => changeRoute(campaign.id)}>
             <CardHeader>
-              <CardTitle>{campaign.title}</CardTitle>
+              <CardTitle>{campaign.companyName}</CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-sm text-zinc-500 mb-2 dark:text-zinc-400">{campaign.description}</p>
+              <p className="text-sm text-zinc-500 mb-2 dark:text-zinc-400">{campaign.companyDescription}</p>
               <div className="flex items-center text-sm text-zinc-500 dark:text-zinc-400">
                 <Calendar className="mr-2 h-4 w-4" />
-                <span>Created on {campaign.date}</span>
+                <span>Skapad den {new Date(campaign.createdAt).toLocaleDateString("sv-SE")}</span>
               </div>
               <div className="flex items-center text-sm text-zinc-500 mt-1 dark:text-zinc-400">
                 <Mail className="mr-2 h-4 w-4" />
-                <span>{campaign.emails} generated emails</span>
+               {/*  <span>{campaign.emails.length} generated emails</span> */}
               </div>
             </CardContent>
           </Card>
