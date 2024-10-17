@@ -1,5 +1,4 @@
 "'use client'"
-
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { Button } from "@/components/ui/button"
@@ -7,6 +6,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { PlusCircle, Calendar, Mail } from "lucide-react"
+import { Link } from "react-router-dom"
+import axios from "axios";
 
 interface Campaign {
   title: string
@@ -29,17 +30,48 @@ const campaigns: Campaign[] = [
 export function CampaignsPageComponent() {
   // Function to navigate to specific campaign
   let navigate = useNavigate();
-  function changeRoute(id:number):void {
+  function changeRoute(id: number): void {
     // navigate(`/campaign?id=${id}`);
     navigate(`/campaign/${id}`);
   }
 
   const [showForm, setShowForm] = useState(false)
+  const [formData, setFormData] = useState({
+    companyName: "",
+    companyDescription: "",
+    productDescription: "",
+    targetAudience: ""
+  });
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { id, value } = e.target;
+    setFormData(prevData => ({
+      ...prevData,
+      [id]: value
+    }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post("http://localhost:3000/api/campaign", {
+        ...formData,
+        userId: "användar-id-här", // Ersätt med faktiskt användar-id
+        emails: [] // Lägg till e-postdata om det behövs
+      });
+      console.log("Kampanj skapad:", response.data);
+      setShowForm(false);
+      // Uppdatera kampanjlistan här om det behövs
+    } catch (error) {
+      console.error("Fel vid skapande av kampanj:", error);
+    }
+  };
 
   return (
     <div className="container mx-auto p-4">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-bold">Campaigns</h1>
+        <Link to="/">Home</Link>
         <Button onClick={() => setShowForm(true)}>
           <PlusCircle className="mr-2 h-4 w-4" /> Create New Campaign
         </Button>
@@ -72,30 +104,50 @@ export function CampaignsPageComponent() {
             <CardTitle>Create your campaign</CardTitle>
           </CardHeader>
           <CardContent>
-            <form className="space-y-4">
+            <form className="space-y-4" onSubmit={handleSubmit}>
               <div>
-                <label htmlFor="company-name" className="block text-sm font-medium text-zinc-500 mb-1 dark:text-zinc-400">
+                <label htmlFor="companyName" className="block text-sm font-medium text-zinc-500 mb-1 dark:text-zinc-400">
                   Company name
                 </label>
-                <Input id="company-name" placeholder="Enter your company name" />
+                <Input
+                  id="companyName"
+                  placeholder="Enter your company name"
+                  value={formData.companyName}
+                  onChange={handleInputChange}
+                />
               </div>
               <div>
-                <label htmlFor="company-description" className="block text-sm font-medium text-zinc-500 mb-1 dark:text-zinc-400">
+                <label htmlFor="companyDescription" className="block text-sm font-medium text-zinc-500 mb-1 dark:text-zinc-400">
                   Company description
                 </label>
-                <Textarea id="company-description" placeholder="Describe your company" />
+                <Textarea
+                  id="companyDescription"
+                  placeholder="Describe your company"
+                  value={formData.companyDescription}
+                  onChange={handleInputChange}
+                />
               </div>
               <div>
-                <label htmlFor="product-description" className="block text-sm font-medium text-zinc-500 mb-1 dark:text-zinc-400">
+                <label htmlFor="productDescription" className="block text-sm font-medium text-zinc-500 mb-1 dark:text-zinc-400">
                   Product description
                 </label>
-                <Textarea id="product-description" placeholder="Describe your product or service" />
+                <Textarea
+                  id="productDescription"
+                  placeholder="Describe your product or service"
+                  value={formData.productDescription}
+                  onChange={handleInputChange}
+                />
               </div>
               <div>
-                <label htmlFor="target-audience" className="block text-sm font-medium text-zinc-500 mb-1 dark:text-zinc-400">
+                <label htmlFor="targetAudience" className="block text-sm font-medium text-zinc-500 mb-1 dark:text-zinc-400">
                   Target audience
                 </label>
-                <Input id="target-audience" placeholder="Who are you targeting?" />
+                <Input
+                  id="targetAudience"
+                  placeholder="Who are you targeting?"
+                  value={formData.targetAudience}
+                  onChange={handleInputChange}
+                />
               </div>
               <Button type="submit">Create Campaign</Button>
             </form>
