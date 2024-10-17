@@ -10,7 +10,7 @@ passport.use(new LocalStrategy(
         console.log('Vi kör localstrategy')
         // Hitta användaren i databasen med användarnamnet
         const user = await prisma.user.findUnique({
-            where: {email: email},
+            where: { email: email },
         })
            if (!user) {
                // Om användaren inte finns
@@ -32,3 +32,25 @@ passport.use(new LocalStrategy(
             });
         })
 );
+
+passport.serializeUser(function (user, done) {
+    done(null, user);
+});
+
+passport.deserializeUser(async (id: string, done) => {
+    try {
+        const user = await prisma.user.findUnique({
+            where: { id },
+            select: { id: true, email: true, name: true },
+        });
+        if (user) {
+            done(null, user);
+        } else {
+            done(new Error("User not found"), null);
+        }
+    } catch (error) {
+        done(error, null);
+    }
+});
+
+export default passport

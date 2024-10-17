@@ -1,13 +1,24 @@
 import { Router } from "express";
 import passport from "passport";
-import '../authStrategies/localStrategy'
-import '../authStrategies/githubStrategy';
-import { Request, Response } from 'express';
+// import '../authStrategies/localStrategy'
+// import '../authStrategies/githubStrategy';
+import { Request, Response, NextFunction } from 'express';
 import express from 'express';
 
 
-const app = Router();
-app.use(express.json());
+declare global {
+    namespace Express {
+        interface User {
+            id: string;
+            email: string;
+            name: string;
+        }
+    }
+}
+
+const app = express.Router();
+// app.use(express.json());
+
 
 // GITHUB STRATEGY 
 
@@ -29,10 +40,28 @@ app.get('/profile', (req: Request, res: Response) => {
 
 // localStrategy
 
-app.post('/login', passport.authenticate('local', {
-    successRedirect: '/profile',
-    failureRedirect: '/login',
-}));
+app.post("/login", (req: Request, res: Response, next: NextFunction) => {
+    passport.authenticate(
+        "local",
+        (err: any, user: Express.User | false, info: any) => {
+            if (err)
+                return res.status(500).json({ message: "Internal server error" });
+            if (!user)
+                return res
+                    .status(401)
+                    .json({ message: info.message || "Invalid email or password" });
+            req.logIn(user, (err) => {
+                if (err)
+                    return res.status(500).json({ message: "Internal server error" });
+                res.json({
+                    message: "Logged in successfully",
+                    user: { id: user.id, email: user.email, name: user.name },
+                    redirectUrl: "/campaigns",
+                });
+            });
+        }
+    )(req, res, next);
+});
 
 app.get('/profile', (req, res) => {
     if (!req.isAuthenticated()) {

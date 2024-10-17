@@ -3,6 +3,7 @@ import passport from "passport";
 import session from "express-session";
 import dotenv from 'dotenv';
 import cors from 'cors';
+import './authStrategies/localStrategy'
 
 //routes
 import { campaignRoutes } from "./routes/campaign";
@@ -11,6 +12,13 @@ import { router as userRouter } from "./routes/user";
 
 const app = express();
 
+const corsOptions = {
+  origin: "http://localhost:5173",
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+};
+app.use(cors(corsOptions));
 
 dotenv.config();
 
@@ -25,15 +33,8 @@ app.use(
 
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(cors())
+// app.use(cors())
 
-passport.serializeUser(function (user, done) {
-  done(null, user);
-});
-
-passport.deserializeUser(function (obj: any, done) {
-  done(null, obj);
-});
 
 // ROUTES
 app.use(express.json());

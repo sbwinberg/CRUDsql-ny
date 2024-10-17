@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import Checkbox from "@/components/ui/LoginCheckbox";
 import { useState } from "react";
 import { FaGithub } from "react-icons/fa";
+import axios from 'axios';
 
 type IconProps = React.SVGProps<SVGSVGElement>;
 const LockIcon = (props: IconProps) => (
@@ -82,31 +83,53 @@ const LoginForm = () => {
   const [password, setPassword] = useState('');
 
 
-  function verifyLogin(e) {
-    e.preventDefault()
-    fetch('http://localhost:1337/auth/login/', {
-      method: 'POST',
-      body: JSON.stringify({
-        email: email,
-        password: password,
-      })
-    })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
-      .then(data => {
-        console.log('Success:', data);
-      })
-      .catch(error => {
-        console.error('Error:', error);
-      })
-  }
+  // function verifyLogin(e: React.FormEvent) {
+  //   e.preventDefault()
+  //   fetch('http://localhost:1337/auth/login', {
+  //     method: 'POST',
+  //     headers: {'Conent-Type': 'applications/json'},
+  //     body: JSON.stringify({
+  //       email: email,
+  //       password: password,
+  //     })
+  //   })
+  //     .then(response => {
+  //       if (!response.ok) {
+  //         throw new Error('Network response was not ok');
+  //       }
+  //       return response.json();
+  //     })
+  //     .then(data => {
+  //       console.log('Success:', data);
+  //     })
+  //     .catch(error => {
+  //       console.error('Error:', error);
+  //     })
+  // }
+  
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      console.log(email, password)
+      const response = await axios.post('http://localhost:1337/auth/login', {
+        email,
+        password,
+      }, {
+        withCredentials: true
+      });
+      console.log("Logged in successfully:", response.data);
+      // Update this line to use the user ID from the response
+    
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response) {
+      } else {
+        console.error("Login error:", error);
+      }
+    }
+  };
 
   return (
-    <form onSubmit={(e)=> verifyLogin(e)} className="space-y-4">
+    <form onSubmit={(e)=> handleSubmit(e)} className="space-y-4">
       <div>
         <label htmlFor="email" className="block text-sm font-medium">
           Email
