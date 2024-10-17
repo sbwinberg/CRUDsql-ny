@@ -31,7 +31,7 @@ export function Home() {
     <div className="flex flex-col min-h-[100dvh]">
       <header className="bg-white shadow">
         <div className="container mx-auto px-4 py-6 flex items-center justify-between">
-          <Link to="#" className="flex items-center gap-2">
+          <Link to="/" className="flex items-center gap-2">
             <MountainIcon className="h-6 w-6" />
             <span className="text-lg font-semibold">Acme Marketing</span>
           </Link>
