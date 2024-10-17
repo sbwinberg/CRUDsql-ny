@@ -1,12 +1,12 @@
 import { Routes, Route } from 'react-router-dom'
 import Login from './routes/Login'
 import { Register } from './components/component/register'
-import { CreateEmail } from './routes/Create-email'
+import { CreateEmail } from './routes/CreateEmail'
 // import CreateCampaign from './routes/Create-Campaign'
 // import { SpecificCampaign } from './components/specific-campaign'
 import Campaign from './routes/campaign'
 import { Homepage } from './routes/Home'
-import { GeneratedEmail } from './routes/Generated-email'
+import { GeneratedEmail } from './routes/GeneratedEmail'
 
 function App() {
   return (
