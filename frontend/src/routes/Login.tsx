@@ -69,6 +69,13 @@ const Header = () => (
     </div>
   </header>
 );
+
+
+const handleGithubLogin = async (e: React.FormEvent) => {
+  e.preventDefault();
+  window.location.href = 'http://localhost:1337/auth/github';
+};
+
 const LoginForm = () => {
   const [rememberMe, setRememberMe] = useState(false);
   const [email, setEmail] = useState('');
@@ -143,8 +150,8 @@ const LoginForm = () => {
           Forgot Password?
         </Link>
       </div>
-      <Button type="submit" className="w-full mt-4 bg-black text-white">Login</Button>
-      <Button className="w-full mt-4 bg-black text-white"> Login with Github <FaGithub /> </Button>
+      <Button type="submit" className="w-full mt-4 bg-black text-white" >Login</Button>
+      <Button className="w-full mt-4 bg-black text-white flex items-center justify-center gap-2" onClick={handleGithubLogin}> <FaGithub />Login with Github  </Button>
     </form>
   );
 };

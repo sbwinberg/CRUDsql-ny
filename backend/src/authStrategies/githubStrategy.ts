@@ -9,7 +9,7 @@ dotenv.config();
 passport.use(new GitHubStrategy({
   clientID: process.env.GITHUB_CLIENT_ID as string,
   clientSecret: process.env.GITHUB_CLIENT_SECRET as string,
-  callbackURL: "http://localhost:1337/auth/github"
+  callbackURL: "http://localhost:5173/"
 },
   (accessToken: string, refreshToken: string, profile: any, done: (err: any, user?: UserProfile | null) => void) => {
     try {
@@ -23,6 +23,7 @@ passport.use(new GitHubStrategy({
         profileUrl: profile.profileUrl || '', // Kontrollera att detta finns
         emails: profile.emails || [] // Kontrollera att detta finns
       };
+      console.log(user);
 
       return done(null, user); // Skicka den skapade användaren
     } catch (err) {
