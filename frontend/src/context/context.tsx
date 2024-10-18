@@ -1,7 +1,7 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useState } from 'react';
 
 // Skapa en kontext
-const AuthContext = createContext({});
+export const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [isLoggedIn, setIsloggedIn] = useState(false);
@@ -13,8 +13,5 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-// Funktion för att använda kontexten
-export const useAuth = () => {
-  return useContext(AuthContext);
-};
+
 
