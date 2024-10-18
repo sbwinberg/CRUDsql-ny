@@ -122,6 +122,7 @@ const LoginForm = () => {
     
     } catch (error) {
       if (axios.isAxiosError(error) && error.response) {
+        console.log(error.response)
       } else {
         console.error("Login error:", error);
       }
