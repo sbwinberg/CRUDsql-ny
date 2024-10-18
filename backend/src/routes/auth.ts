@@ -28,16 +28,14 @@ app.get("/profile", (req: Request, res: Response) => {
 // localStrategy
 app.post("/login", passport.authenticate('local'), (req: Request, res: Response) => {
   const {user} = req;
-  console.log(user)
   
-  // if (err) return res.status(500).json({ message: "Internal server error" });
   if (!user){
-    console.log('Detta error körs')
     return res
         .status(401)
-        .json({ message: "Invalid email or password" }); //info.message ||
+        .json({ message: "Invalid email or password" });
   }
   try {
+    // Dubbel error-handling?? :-)
     req.logIn(user, (err) => {
         if (err) return res.status(500).json({ message: "Internal server error" });
         else res.json({

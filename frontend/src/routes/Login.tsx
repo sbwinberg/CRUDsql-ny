@@ -19,35 +19,9 @@ const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  // function verifyLogin(e: React.FormEvent) {
-  //   e.preventDefault()
-  //   fetch('http://localhost:1337/auth/login', {
-  //     method: 'POST',
-  //     headers: {'Conent-Type': 'applications/json'},
-  //     body: JSON.stringify({
-  //       email: email,
-  //       password: password,
-  //     })
-  //   })
-  //     .then(response => {
-  //       if (!response.ok) {
-  //         throw new Error('Network response was not ok');
-  //       }
-  //       return response.json();
-  //     })
-  //     .then(data => {
-  //       console.log('Success:', data);
-  //     })
-  //     .catch(error => {
-  //       console.error('Error:', error);
-  //     })
-  // }
-
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      console.log(email, password);
       const response = await axios.post(
         "http://localhost:1337/auth/login",
         {
@@ -59,7 +33,6 @@ const LoginForm = () => {
         }
       );
       console.log("Logged in successfully:", response.data);
-      // Update this line to use the user ID from the response
     }
     catch (error) {
       if (axios.isAxiosError(error) && error.response) {
