@@ -56,7 +56,6 @@ export function CampaignsPageComponent() {
       });
       console.log("Kampanj skapad:", response.data);
       setShowForm(false);
-      // Uppdatera kampanjlistan här om det behövs
     } catch (error) {
       console.error("Fel vid skapande av kampanj:", error);
     }
@@ -68,7 +67,6 @@ export function CampaignsPageComponent() {
       try {
         const response = await axios.get("http://localhost:1337/campaign")
         setCampaigns(response.data)
-        console.log(response.data, "campaigns")
         console.log(campaigns, "campaigns")
       } catch (error) {
         console.error("Fel vid hämtning av kampanjer:", error)
@@ -86,7 +84,6 @@ export function CampaignsPageComponent() {
           <PlusCircle className="mr-2 h-4 w-4" /> Create New Campaign
         </Button>
       </div>
-
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
         {campaigns.map((campaign) => (
           <Card key={campaign.id} onClick={() => changeRoute(campaign.id)}>
