@@ -79,7 +79,6 @@ export function CampaignsPageComponent() {
     <div className="container mx-auto p-4">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-bold">Campaigns</h1>
-        <Link to="/">Home</Link>
         <Button onClick={() => setShowForm(true)}>
           <PlusCircle className="mr-2 h-4 w-4" /> Create New Campaign
         </Button>

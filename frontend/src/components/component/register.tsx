@@ -33,14 +33,6 @@ const LogInIcon = (props: IconProps) => (
   </>
 );
 
-const Header = () => (
-  <header className="w-full py-4 bg-white shadow">
-    <div className="container mx-auto">
-      <LogInIcon className="w-8 h-8 mx-auto" />
-    </div>
-  </header>
-);
-
 export function Register() {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
@@ -78,7 +70,6 @@ export function Register() {
 
   return (
     <>
-      <Header />
       <div className="flex flex-col items-center justify-center min-h-screen p-4">
         <div className="max-w-md p-8 bg-white rounded shadow">
           <div className="text-center">

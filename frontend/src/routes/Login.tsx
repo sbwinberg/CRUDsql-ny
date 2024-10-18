@@ -63,15 +63,7 @@ const MailIcon = (props: IconProps) => (
   </svg>
 );
 
-const Header = () => (
-  <header className="w-full py-4 bg-white shadow">
-    <div className="container mx-auto">
-      <LogInIcon className="w-8 h-8 mx-auto" />
-    </div>
-  </header>
-);
-
-
+// fixa denna till en riktig fetch med fetch eller axios?
 const handleGithubLogin = async (e: React.FormEvent) => {
   e.preventDefault();
   window.location.href = 'http://localhost:1337/auth/github';
@@ -106,7 +98,7 @@ const LoginForm = () => {
   //       console.error('Error:', error);
   //     })
   // }
-  
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
@@ -119,8 +111,8 @@ const LoginForm = () => {
       });
       console.log("Logged in successfully:", response.data);
       // Update this line to use the user ID from the response
-    
-    } catch (error) {
+    }
+    catch (error) {
       if (axios.isAxiosError(error) && error.response) {
       } else {
         console.error("Login error:", error);
@@ -129,7 +121,7 @@ const LoginForm = () => {
   };
 
   return (
-    <form onSubmit={(e)=> handleSubmit(e)} className="space-y-4">
+    <form onSubmit={(e) => handleSubmit(e)} className="space-y-4">
       <div>
         <label htmlFor="email" className="block text-sm font-medium">
           Email
@@ -140,7 +132,7 @@ const LoginForm = () => {
             id="email"
             placeholder="m@example.com"
             className="w-full pl-3 pr-10"
-            onChange={(e)=> setEmail(e.target.value)}
+            onChange={(e) => setEmail(e.target.value)}
           />
           <MailIcon className="absolute right-2 top-2.5 h-4 w-4 text-red-500" />
         </div>
@@ -182,7 +174,6 @@ const LoginForm = () => {
 const LoginComponent = () => {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50">
-      <Header />
       <main className="flex flex-col items-center justify-center flex-1 w-full px-4">
         <div className="max-w-md p-8 bg-white rounded shadow">
           <div className="flex flex-col items-center mb-6">
