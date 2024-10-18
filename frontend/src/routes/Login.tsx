@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import Checkbox from "@/components/ui/LoginCheckbox";
 import { useState } from "react";
 import { FaGithub } from "react-icons/fa";
-import axios from 'axios';
+import axios from "axios";
 
 type IconProps = React.SVGProps<SVGSVGElement>;
 const LockIcon = (props: IconProps) => (
@@ -27,22 +27,26 @@ const LockIcon = (props: IconProps) => (
 );
 
 const LogInIcon = (props: IconProps) => (
-  <svg
-    {...props}
-    xmlns="http://www.w3.org/2000/svg"
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" />
-    <polyline points="10 17 15 12 10 7" />
-    <line x1="15" x2="3" y1="12" y2="12" />
-  </svg>
+  <>
+    <Link to="/">
+      <svg
+        {...props}
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" />
+        <polyline points="10 17 15 12 10 7" />
+        <line x1="15" x2="3" y1="12" y2="12" />
+      </svg>
+    </Link>
+  </>
 );
 
 const MailIcon = (props: IconProps) => (
@@ -71,17 +75,15 @@ const Header = () => (
   </header>
 );
 
-
 const handleGithubLogin = async (e: React.FormEvent) => {
   e.preventDefault();
-  window.location.href = 'http://localhost:1337/auth/github';
+  window.location.href = "http://localhost:1337/auth/github";
 };
 
 const LoginForm = () => {
   const [rememberMe, setRememberMe] = useState(false);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   // function verifyLogin(e: React.FormEvent) {
   //   e.preventDefault()
@@ -106,22 +108,26 @@ const LoginForm = () => {
   //       console.error('Error:', error);
   //     })
   // }
-  
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      console.log(email, password)
-      const response = await axios.post('http://localhost:1337/auth/login', {
-        email,
-        password,
-      }, {
-        withCredentials: true
-      });
+      console.log(email, password);
+      const response = await axios.post(
+        "http://localhost:1337/auth/login",
+        {
+          email,
+          password,
+        },
+        {
+          withCredentials: true,
+        }
+      );
       console.log("Logged in successfully:", response.data);
       // Update this line to use the user ID from the response
-    
     } catch (error) {
       if (axios.isAxiosError(error) && error.response) {
+        console.error("Login error:", error.response.data.error);
       } else {
         console.error("Login error:", error);
       }
@@ -129,7 +135,7 @@ const LoginForm = () => {
   };
 
   return (
-    <form onSubmit={(e)=> handleSubmit(e)} className="space-y-4">
+    <form onSubmit={(e) => handleSubmit(e)} className="space-y-4">
       <div>
         <label htmlFor="email" className="block text-sm font-medium">
           Email
@@ -140,7 +146,7 @@ const LoginForm = () => {
             id="email"
             placeholder="m@example.com"
             className="w-full pl-3 pr-10"
-            onChange={(e)=> setEmail(e.target.value)}
+            onChange={(e) => setEmail(e.target.value)}
           />
           <MailIcon className="absolute right-2 top-2.5 h-4 w-4 text-red-500" />
         </div>
@@ -173,8 +179,17 @@ const LoginForm = () => {
           Forgot Password?
         </Link>
       </div>
-      <Button type="submit" className="w-full mt-4 bg-black text-white" >Login</Button>
-      <Button className="w-full mt-4 bg-black text-white flex items-center justify-center gap-2" onClick={handleGithubLogin}> <FaGithub />Login with Github  </Button>
+      <Button type="submit" className="w-full mt-4 bg-black text-white">
+        Login
+      </Button>
+      <Button
+        className="w-full mt-4 bg-black text-white flex items-center justify-center gap-2"
+        onClick={handleGithubLogin}
+      >
+        {" "}
+        <FaGithub />
+        Login with Github{" "}
+      </Button>
     </form>
   );
 };
