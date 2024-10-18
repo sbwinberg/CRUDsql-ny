@@ -92,7 +92,7 @@ export function CampaignsPageComponent() {
               <p className="text-sm text-zinc-500 mb-2 dark:text-zinc-400">{campaign.companyDescription}</p>
               <div className="flex items-center text-sm text-zinc-500 dark:text-zinc-400">
                 <Calendar className="mr-2 h-4 w-4" />
-                <span>Skapad den {new Date(campaign.createdAt).toLocaleDateString("sv-SE")}</span>
+                <span>Skapad {new Date(campaign.createdAt).toLocaleDateString("sv-SE")}</span>
               </div>
               <div className="flex items-center text-sm text-zinc-500 mt-1 dark:text-zinc-400">
                 <Mail className="mr-2 h-4 w-4" />

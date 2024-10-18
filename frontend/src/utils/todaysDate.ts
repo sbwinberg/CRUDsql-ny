@@ -1,6 +1,2 @@
-  // genererar dagens datum
-  export const todaysDate = new Date().toLocaleDateString("sv-SE", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
+  // // genererar dagens datum  
+export const todaysDate = new Date().toISOString();
