@@ -7,6 +7,7 @@ import { useState } from "react";
 import { FaGithub } from "react-icons/fa";
 import axios from 'axios';
 import { LockIcon, LogInIcon, MailIcon } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 // fixa denna till en riktig fetch med fetch eller axios?
 const handleGithubLogin = async (e: React.FormEvent) => {
@@ -18,6 +19,7 @@ const LoginForm = () => {
   const [rememberMe, setRememberMe] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -33,6 +35,7 @@ const LoginForm = () => {
         }
       );
       console.log("Logged in successfully:", response.data);
+      navigate("/");
     }
     catch (error) {
       if (axios.isAxiosError(error) && error.response) {
