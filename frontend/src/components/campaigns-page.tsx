@@ -8,6 +8,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { PlusCircle, Calendar, Mail } from "lucide-react"
 import { Link } from "react-router-dom"
 import axios from "axios";
+import { todaysDate } from "@/utils/todaysDate"
 
 interface Campaign {
   companyName: string
@@ -17,7 +18,7 @@ interface Campaign {
   productDescription: string
   targetAudience: string
   userId: string 
- // emails: [string]
+ // emails: [string] // detta ska va med men fattar inte ens grejen med emails
 }
 
 export function CampaignsPageComponent() {
@@ -44,13 +45,6 @@ export function CampaignsPageComponent() {
     }));
   };
 
-  // genererar dagens datum
-  const todaysDate = new Date().toLocaleDateString("sv-SE", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
@@ -60,8 +54,6 @@ export function CampaignsPageComponent() {
         userId: "3c4e743f-71bf-4546-b532-cb378b9def7c", // test hårdkodad userId ska fixas med autenticering
         emails: [] // oklart hur emails ens ska fungera?
       });
-
-
       console.log("Kampanj skapad:", response.data);
       setShowForm(false);
       // Uppdatera kampanjlistan här om det behövs
