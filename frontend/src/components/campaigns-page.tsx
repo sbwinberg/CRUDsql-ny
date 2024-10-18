@@ -6,7 +6,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { PlusCircle, Calendar, Mail } from "lucide-react"
-import { Link } from "react-router-dom"
 import axios from "axios";
 import { todaysDate } from "@/utils/todaysDate"
 
@@ -51,7 +50,7 @@ export function CampaignsPageComponent() {
       const response = await axios.post("http://localhost:1337/campaign", {
         ...formData,
         createdAtDate: todaysDate,
-        userId: "3c4e743f-71bf-4546-b532-cb378b9def7c", // test hårdkodad userId ska fixas med autenticering
+        userId: "53b6c242-5acf-4fe5-a2bb-64b1848edf46", // test hårdkodad userId ska fixas med autenticering
         emails: [] // oklart hur emails ens ska fungera?
       });
       console.log("Kampanj skapad:", response.data);
@@ -79,7 +78,6 @@ export function CampaignsPageComponent() {
     <div className="container mx-auto p-4">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-3xl font-bold">Campaigns</h1>
-        <Link to="/">Home</Link>
         <Button onClick={() => setShowForm(true)}>
           <PlusCircle className="mr-2 h-4 w-4" /> Create New Campaign
         </Button>

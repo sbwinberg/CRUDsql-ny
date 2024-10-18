@@ -1,6 +1,7 @@
 import { Router } from "express";
 import passport from "passport";
 import "../authStrategies/githubStrategy";
+import "../authStrategies/localStrategy";
 import { Request, Response, NextFunction } from "express";
 
 const app = Router();
@@ -25,28 +26,30 @@ app.get("/profile", (req: Request, res: Response) => {
 });
 
 // localStrategy
-
-app.post("/login", (req: Request, res: Response, next: NextFunction) => {
-  passport.authenticate(
-    "local",
-    (err: any, user: Express.User | false, info: any) => {
-      if (err)
-        return res.status(500).json({ message: "Internal server error" });
-      if (!user)
-        return res
-          .status(401)
-          .json({ message: info.message || "Invalid email or password" });
-      req.logIn(user, (err) => {
-        if (err)
-          return res.status(500).json({ message: "Internal server error" });
-        res.json({
-          message: "Logged in successfully",
-          user: { id: user.id, email: user.email, name: user.name },
-          redirectUrl: "/campaigns",
+app.post("/login", passport.authenticate('local'), (req: Request, res: Response) => {
+  const {user} = req;
+  console.log(user)
+  
+  // if (err) return res.status(500).json({ message: "Internal server error" });
+  if (!user){
+    console.log('Detta error körs')
+    return res
+        .status(401)
+        .json({ message: "Invalid email or password" }); //info.message ||
+  }
+  try {
+    req.logIn(user, (err) => {
+        if (err) return res.status(500).json({ message: "Internal server error" });
+        else res.json({
+            message: "Logged in successfully",
+            user: { id: user.id, email: user.email, name: user.name },
+            redirectUrl: "/campaigns",
         });
-      });
-    }
-  )(req, res, next);
+    });
+  } catch(err){
+    console.log(err)
+    res.send(err)
+  }
 });
 
 app.get("/profile", (req, res) => {
