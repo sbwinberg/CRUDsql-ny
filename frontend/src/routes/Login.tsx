@@ -72,7 +72,6 @@ const LoginForm = () => {
 
   return (
     <form onSubmit={(e) => handleSubmit(e)} className="space-y-4">
-    <form onSubmit={(e) => handleSubmit(e)} className="space-y-4">
       <div>
         <label htmlFor="email" className="block text-sm font-medium">
           Email
@@ -83,7 +82,6 @@ const LoginForm = () => {
             id="email"
             placeholder="m@example.com"
             className="w-full pl-3 pr-10"
-            onChange={(e) => setEmail(e.target.value)}
             onChange={(e) => setEmail(e.target.value)}
           />
           <MailIcon className="absolute right-2 top-2.5 h-4 w-4 text-red-500" />
