@@ -38,27 +38,12 @@ export function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
-<<<<<<< HEAD
-  const [passwordsMatch, setPasswordMatch] = useState(false);
   const navigate = useNavigate();
 
-  // IMPLEMENTERA LOGIK FÖR ATT FÖRHINDRA ATT KUNNA REGISTRERA INNAN LÖSENORD MATCHAR
-  function setAndComparePassword(newPW: string): void {
-    setRepeatPassword(newPW);
-    repeatPassword === password
-      ? console.log("Passwords match")
-      : console.log("Passwords do not match");
-  }
-
-  function submitToDatabase(e: React.FormEvent) {
-    e.preventDefault();
-=======
-
   function submitToDatabase(e: React.FormEvent) {
     e.preventDefault();
 
-    if(repeatPassword !== password) return alert('Passwords do not match')
->>>>>>> 49e7d711a8f5d3ba93634a72fae0b8386463c00a
+    if(repeatPassword !== password) return alert('passwords do not match')
     fetch("http://localhost:1337/users/", {
       method: "POST",
       headers: {
