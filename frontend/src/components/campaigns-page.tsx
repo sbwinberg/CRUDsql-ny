@@ -51,7 +51,7 @@ export function CampaignsPageComponent() {
       const response = await axios.post("http://localhost:1337/campaign", {
         ...formData,
         createdAtDate: todaysDate,
-        userId: "3c4e743f-71bf-4546-b532-cb378b9def7c", // test hårdkodad userId ska fixas med autenticering
+        userId: "53b6c242-5acf-4fe5-a2bb-64b1848edf46", // test hårdkodad userId ska fixas med autenticering
         emails: [] // oklart hur emails ens ska fungera?
       });
       console.log("Kampanj skapad:", response.data);
