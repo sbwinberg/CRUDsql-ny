@@ -6,103 +6,140 @@
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { IconProps } from "@radix-ui/react-icons/dist/types";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+
+type IconProps = React.SVGProps<SVGSVGElement>;
+const LogInIcon = (props: IconProps) => (
+  <>
+    <Link to="/">
+      <svg
+        {...props}
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" />
+        <polyline points="10 17 15 12 10 7" />
+        <line x1="15" x2="3" y1="12" y2="12" />
+      </svg>
+    </Link>
+  </>
+);
+
+const Header = () => (
+  <header className="w-full py-4 bg-white shadow">
+    <div className="container mx-auto">
+      <LogInIcon className="w-8 h-8 mx-auto" />
+    </div>
+  </header>
+);
 
 export function Register() {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
+  const [passwordsMatch, setPasswordMatch] = useState(false);
 
   // IMPLEMENTERA LOGIK FÖR ATT FÖRHINDRA ATT KUNNA REGISTRERA INNAN LÖSENORD MATCHAR
   function setAndComparePassword(newPW: string): void {
     setRepeatPassword(newPW);
-    repeatPassword === password ? console.log("Passwords match") : console.log("Passwords do not match")
+    repeatPassword === password
+      ? console.log("Passwords match")
+      : console.log("Passwords do not match");
   }
 
-  function submitToDatabase(e: React.FormEvent){
+  function submitToDatabase(e: React.FormEvent) {
     e.preventDefault();
 
-    fetch('http://localhost:1337/users/', {
-      method: 'POST',
+    fetch("http://localhost:1337/users/", {
+      method: "POST",
       headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
+        Accept: "application/json",
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         name: fullName,
         email: email,
-        password: password
-      })
+        password: password,
+      }),
     })
-    .then(res => res.json())
-    .then(data => console.log((data)))
-    .catch(error => console.log(error))
+      .then((res) => res.json())
+      .then((data) => console.log(data))
+      .catch((error) => console.log(error));
   }
-  
+
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen p-4">
-      <div className="max-w-md p-8 bg-white rounded shadow">
-        <div className="text-center">
-          <ImageIcon className="w-12 h-12 mx-auto mb-4" />
-          <h1 className="text-3xl font-bold">Create your account</h1>
-          <p className="text-muted-foreground">
-            Join our email marketing platform and start growing your business.
+    <>
+      <Header />
+      <div className="flex flex-col items-center justify-center min-h-screen p-4">
+        <div className="max-w-md p-8 bg-white rounded shadow">
+          <div className="text-center">
+            <ImageIcon className="w-12 h-12 mx-auto mb-4" />
+            <h1 className="text-3xl font-bold">Create your account</h1>
+            <p className="text-muted-foreground">
+              Join our email marketing platform and start growing your business.
+            </p>
+          </div>
+          <form
+            className="w-full max-w-md mt-8 space-y-4"
+            onSubmit={(e) => submitToDatabase(e)}
+          >
+            <div className="space-y-2">
+              <Label htmlFor="full-name">Full Name</Label>
+              <Input
+                id="full-name"
+                placeholder="Enter your full name"
+                onChange={(e) => setFullName(e.target.value)}
+              ></Input>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="email">Email address</Label>
+              <Input
+                id="email"
+                type="email"
+                placeholder="Enter your email"
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="password">Password</Label>
+              <Input
+                id="password"
+                type="password"
+                placeholder="Enter your password"
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="confirm-password">Confirm Password</Label>
+              <Input
+                id="confirm-password"
+                type="password"
+                placeholder="Confirm your password"
+                onChange={(e) => setAndComparePassword(e.target.value)}
+              />
+            </div>
+            <Button className="w-full mt-4" variant="default">
+              Register
+            </Button>
+          </form>
+          <p className="mt-4 text-sm text-muted-foreground">
+            Already have an account?{" "}
+            <Link to="/login" className="text-blue-600">
+              Logga in
+            </Link>
           </p>
         </div>
-        <form 
-          className="w-full max-w-md mt-8 space-y-4"
-          onSubmit={(e) => submitToDatabase(e)}
-        >
-          <div className="space-y-2">
-            <Label htmlFor="full-name">Full Name</Label>
-            <Input 
-              id="full-name" 
-              placeholder="Enter your full name" 
-              onChange={(e) => setFullName(e.target.value)}
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="email">Email address</Label>
-            <Input 
-              id="email" 
-              type="email" 
-              placeholder="Enter your email"
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="password">Password</Label>
-            <Input
-              id="password"
-              type="password"
-              placeholder="Enter your password"
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="confirm-password">Confirm Password</Label>
-            <Input
-              id="confirm-password"
-              type="password"
-              placeholder="Confirm your password"
-              onChange={(e) => setAndComparePassword(e.target.value)}
-            />
-          </div>
-          <Button className="w-full mt-4" variant="default">
-            Register
-          </Button>
-        </form>
-        <p className="mt-4 text-sm text-muted-foreground">
-          Already have an account?{" "}
-          <Link to="/login" className="text-blue-600">
-            Logga in
-          </Link>
-        </p>
       </div>
-    </div>
+    </>
   );
 }
 

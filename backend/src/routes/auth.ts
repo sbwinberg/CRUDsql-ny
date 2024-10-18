@@ -1,41 +1,27 @@
 import { Router } from "express";
 import passport from "passport";
-// import '../authStrategies/localStrategy'
-// import '../authStrategies/githubStrategy';
-import { Request, Response, NextFunction } from 'express';
-import express from 'express';
+import "../authStrategies/githubStrategy";
+import { Request, Response } from "express";
 
+const app = Router();
 
-declare global {
-    namespace Express {
-        interface User {
-            id: string;
-            email: string;
-            name: string;
-        }
-    }
-}
+app.get("/", passport.authenticate("github"));
 
-const app = express.Router();
-// app.use(express.json());
+app.get(
+  "/callback",
+  passport.authenticate("github", { failureRedirect: "/" }),
+  function (req: Request, res: Response) {
+    // res.redirect('/profile');
+    // Indikerar att användaren är inloggad
+    res.redirect("http://localhost:5173/?loggedIn=true");
+  }
+);
 
-
-// GITHUB STRATEGY 
-
-app.get('/github',
-    passport.authenticate('github'));
-
-app.get('/callback',
-    passport.authenticate('github', { failureRedirect: '/' }),
-    function (req: Request, res: Response) {
-        res.redirect('/profile');
-    });
-
-app.get('/profile', (req: Request, res: Response) => {
-    if (!req.isAuthenticated()) {
-        return res.redirect('/auth/github');
-    }
-    res.json(req.user);
+app.get("/profile", (req: Request, res: Response) => {
+  if (!req.isAuthenticated()) {
+    return res.redirect("/auth/github");
+  }
+  res.json(req.user);
 });
 
 // localStrategy
@@ -69,5 +55,18 @@ app.get('/profile', (req, res) => {
     }
     res.json(req.user);
 })
+
+// ---------------------------------------------------------------------------
+// Utloggningsrutt
+app.get("/logout", (req: Request, res: Response) => {
+  req.logout((err) => {
+    if (err) {
+      console.error("Error during logout:", err);
+      return res.status(500).json({ message: "Error logging out" });
+    }
+    res.redirect("http://localhost:5173/");
+  });
+});
+// ---------------------------------------------------------------------------
 
 export default app;
