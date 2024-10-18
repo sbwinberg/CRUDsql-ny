@@ -74,8 +74,8 @@ export function CampaignsPageComponent() {
         console.error("Fel vid hämtning av kampanjer:", error)
       }
     }
-    fetchCampaigns()
-  }, [])
+    fetchCampaigns();
+  }, [showForm]);
 
   return (
     <div className="container mx-auto p-4">
