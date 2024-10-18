@@ -1,9 +1,11 @@
 import { MountainIcon } from 'lucide-react';
-import React from 'react';
 import { Outlet } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import { useAuth } from './context/context';
 
-const Layout: React.FC = () => {
+const Layout = () => {
+    const { isLoggedIn } = useAuth()as { isLoggedIn: boolean };
+    
     return (
         <div className="layout">
             <header style={{ backgroundColor: '#3498db', color: 'white', padding: '1rem' }}>
@@ -16,8 +18,8 @@ const Layout: React.FC = () => {
                         <Link
                             to="/login"
                             className="text-sm font-medium hover:underline underline-offset-4"
-                        >
-                            Logga in
+                            >
+                            {isLoggedIn ? 'Logga ut' : 'Logga in'}
                         </Link>
                         <Link
                             to="/register"

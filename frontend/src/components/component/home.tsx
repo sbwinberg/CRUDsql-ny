@@ -1,6 +1,9 @@
 import { Link } from "react-router-dom";
+import { useAuth } from "../../context/context";
 
 export function Home() {
+  const { isLoggedIn } = useAuth()as { isLoggedIn: boolean };
+
   return (
     <div className="flex flex-col min-h-[100dvh]">
       <main className="flex-1">
@@ -27,7 +30,7 @@ export function Home() {
                   to="/login"
                   className="inline-flex h-10 items-center justify-center rounded-md border border-input bg-background px-8 text-sm font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
                 >
-                  Logga in
+                  {isLoggedIn ? 'Logga ut' : 'Logga in'}
                 </Link>
               </div>
             </div>
