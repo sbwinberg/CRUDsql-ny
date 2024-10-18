@@ -1,50 +1,15 @@
-# React + TypeScript + Vite
+# SETUP FOR TESTING
+1. Navigera dig fram till frontend mappen och gör en "npm i"
+2. gör en "npm i" i backend mappen också
+3. Skapa en .env fil i backend filen, lägg in följande miljövariabler för att testa applikationen
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+DATABASE_URL=postgresql://neondb_owner:NLy6nUFV4QKe@ep-super-fire-a2v1o3g5.eu-central-1.aws.neon.tech/neondb?sslmode=require
 
-Currently, two official plugins are available:
+SERVER_PORT=1337
+SERVER_HOSTNAME=localhost
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+GITHUB_CLIENT_ID=Ov23liytUKPfKwmanNUp
+GITHUB_CLIENT_SECRET=fefb6bd8588e2c1189aa51917d33113184f5c8e1
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
-
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+4. Öppna en terminal i fontend mappen och en i backend mappen. I båda terminalerna kör "npm run dev"
+5. Nu är applikationen redo att interagera med!
