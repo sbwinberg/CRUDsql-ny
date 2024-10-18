@@ -38,6 +38,7 @@ export function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
+<<<<<<< HEAD
   const [passwordsMatch, setPasswordMatch] = useState(false);
   const navigate = useNavigate();
 
@@ -51,6 +52,13 @@ export function Register() {
 
   function submitToDatabase(e: React.FormEvent) {
     e.preventDefault();
+=======
+
+  function submitToDatabase(e: React.FormEvent) {
+    e.preventDefault();
+
+    if(repeatPassword !== password) return alert('Passwords do not match')
+>>>>>>> 49e7d711a8f5d3ba93634a72fae0b8386463c00a
     fetch("http://localhost:1337/users/", {
       method: "POST",
       headers: {
@@ -118,7 +126,7 @@ export function Register() {
                 id="confirm-password"
                 type="password"
                 placeholder="Confirm your password"
-                onChange={(e) => setAndComparePassword(e.target.value)}
+                onChange={(e) => setRepeatPassword(e.target.value)}
               />
             </div>
             <Button className="w-full mt-4" variant="default">
