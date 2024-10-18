@@ -46,17 +46,6 @@ const Layout = () => {
                 <p className="text-xs text-muted-foreground">
                     &copy; 2024 Gbg Marketing. All rights reserved.
                 </p>
-                {/* 
-                // vad ska vi med dessa? / Jens
-                <nav className="sm:ml-auto flex gap-4 sm:gap-6">
-                    <Link to="#" className="text-xs hover:underline underline-offset-4">
-                        Terms of Service
-                    </Link>
-                    <Link to="#" className="text-xs hover:underline underline-offset-4">
-                        Privacy
-                    </Link>
-                </nav>
-                 */}
             </footer>
         </div>
     );

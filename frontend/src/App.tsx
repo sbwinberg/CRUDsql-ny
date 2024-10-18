@@ -5,7 +5,7 @@ import { CreateEmail } from './routes/emails/CreateEmail'
 // import CreateCampaign from './routes/Create-Campaign'
 // import { SpecificCampaign } from './components/specific-campaign'
 import { CampaignPage } from './routes/campaigns/CampaignPage'
-import { Homepage } from './routes/landingPage'
+import { LandingPage } from './routes/LandingPage'
 import { GeneratedEmail } from './routes/emails/GeneratedEmail'
 import Layout from './Layout'
 import { AuthProvider } from './context/context'
@@ -15,7 +15,7 @@ function App() {
     <AuthProvider>
       <Routes>
         <Route element={<Layout />}>
-          <Route path='/' element={<Homepage />} />
+          <Route path='/' element={<LandingPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<Register />} />
           <Route path="/campaign" element={<CampaignPage />} />
