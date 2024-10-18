@@ -1,6 +1,6 @@
 import { createContext, useState } from 'react';
 
-// Skapa en kontext
+// Skapa en Context
 export const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {

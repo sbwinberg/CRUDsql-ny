@@ -1,13 +1,13 @@
-import React from "react";
+import React, { useState, useContext } from "react";
 import Input from "@/components/ui/LoginInput";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import Checkbox from "@/components/ui/LoginCheckbox";
-import { useState } from "react";
 import { FaGithub } from "react-icons/fa";
 import axios from 'axios';
 import { LockIcon, LogInIcon, MailIcon } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "@/context/context";
 
 // fixa denna till en riktig fetch med fetch eller axios?
 const handleGithubLogin = async (e: React.FormEvent) => {
@@ -20,6 +20,7 @@ const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const { setIsloggedIn } = useContext(AuthContext) as { setIsloggedIn: (value: boolean) => void };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -36,6 +37,7 @@ const LoginForm = () => {
       );
       console.log("Logged in successfully:", response.data);
       navigate("/");
+      setIsloggedIn(true)
     }
     catch (error) {
       if (axios.isAxiosError(error) && error.response) {

@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom";
-import { useAuth } from "../../context/context";
+import { useContext } from 'react';
+import { AuthContext } from "@/context/context";
 
 export function Home() {
-  const { isLoggedIn } = useAuth()as { isLoggedIn: boolean };
+  const { isLoggedIn } = useContext(AuthContext)as { isLoggedIn: boolean };
 
   return (
     <div className="flex flex-col min-h-[100dvh]">

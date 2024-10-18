@@ -1,10 +1,11 @@
 import { MountainIcon } from 'lucide-react';
 import { Outlet } from 'react-router-dom';
+import { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { useAuth } from './context/context';
+import { AuthContext } from './context/context';
 
 const Layout = () => {
-    const { isLoggedIn } = useAuth()as { isLoggedIn: boolean };
+    const { isLoggedIn } = useContext(AuthContext)as { isLoggedIn: boolean };
     
     return (
         <div className="layout">
