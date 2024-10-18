@@ -2,7 +2,7 @@
 
 import CampaignsPageComponent from "@/components/campaigns-page";
 
-export default function CampaignPage() {
+export function CampaignPage() {
     return (
         <main className="justify-center items-center">
             <CampaignsPageComponent />

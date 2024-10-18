@@ -8,7 +8,7 @@ export function Home() {
         <div className="container mx-auto px-4 py-6 flex items-center justify-between">
           <Link to="/" className="flex items-center gap-2">
             <MountainIcon className="h-6 w-6" />
-            <span className="text-lg font-semibold">Acme Marketing</span>
+            <span className="text-lg font-semibold">Gbg Marketing</span>
           </Link>
           <div className="flex items-center gap-4">
             <Link
@@ -22,6 +22,12 @@ export function Home() {
               className="inline-flex h-9 items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
             >
               Registrera
+            </Link>
+            <Link
+              to="/campaign"
+              className="inline-flex h-9 items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
+            >
+              Campaigns
             </Link>
           </div>
         </div>
@@ -66,7 +72,7 @@ export function Home() {
       </main>
       <footer className="flex flex-col gap-2 sm:flex-row py-6 w-full shrink-0 items-center px-4 md:px-6 border-t">
         <p className="text-xs text-muted-foreground">
-          &copy; 2024 Acme Marketing. All rights reserved.
+          &copy; 2024 Gbg Marketing. All rights reserved.
         </p>
         <nav className="sm:ml-auto flex gap-4 sm:gap-6">
           <Link to="#" className="text-xs hover:underline underline-offset-4">

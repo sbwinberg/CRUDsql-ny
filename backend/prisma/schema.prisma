@@ -20,7 +20,7 @@ model User {
   name     String
   email    String     @unique
   password String
-  campaign Campaign[] 
+  campaign Campaign[]
 }
 
 model Campaign {
@@ -29,6 +29,7 @@ model Campaign {
   companyDescription String
   productDescription String
   targetAudience     String
+  createdAt          String
   userId             String
   user               User    @relation(fields: [userId], references: [id])
   emails             Email[]

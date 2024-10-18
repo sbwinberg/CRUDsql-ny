@@ -4,7 +4,7 @@ import { Register } from './components/component/register'
 import { CreateEmail } from './routes/CreateEmail'
 // import CreateCampaign from './routes/Create-Campaign'
 // import { SpecificCampaign } from './components/specific-campaign'
-import Campaign from './routes/campaign'
+import { CampaignPage } from './routes/campaignsPage/CampaignPage'
 import { Homepage } from './routes/Home'
 import { GeneratedEmail } from './routes/GeneratedEmail'
 
@@ -14,7 +14,7 @@ function App() {
       <Route path='/' element={<Homepage />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
-      <Route path="/campaign" element={<Campaign />} />
+      <Route path="/campaign" element={<CampaignPage />} />
       <Route path="/create-email" element={<CreateEmail />} />
       {/* <Route path="/create-campaign" element={<CreateCampaign />} /> */}
       <Route path="/generated-email" element={<GeneratedEmail />} />

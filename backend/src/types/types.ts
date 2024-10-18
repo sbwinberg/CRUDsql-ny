@@ -41,6 +41,7 @@ export interface RequestCampaign {
   companyDescription: string;
   productDescription: string;
   targetAudience: string;
+  createdAtDate: string;
   userId: string;
   emails: {
     subject: string;

@@ -37,13 +37,14 @@ router.get("/:id", async (req, res) => {
 // create new campaign
 router.post("/", async (req: Request<{}, {}, RequestCampaign>, res) => {
     try {
-        const { companyName, companyDescription, productDescription, targetAudience, userId, emails } = req.body;
+        const { companyName, companyDescription, productDescription, targetAudience, createdAtDate, userId, emails } = req.body;
         const newCampaign = await prisma.campaign.create({
             data: {
                 companyName,
                 companyDescription,
                 productDescription,
                 targetAudience,
+                createdAt: createdAtDate,
                 user: { connect: { id: userId } },
                 emails: {
                     create: emails.map(email => ({
@@ -70,7 +71,7 @@ router.post("/", async (req: Request<{}, {}, RequestCampaign>, res) => {
 router.put("/:id", async (req, res) => {
     const { id } = req.params;
     try {
-        const { companyName, companyDescription, productDescription, targetAudience } = req.body;
+        const { companyName, companyDescription, productDescription, targetAudience, } = req.body;
         const updateCampaign = await prisma.campaign.update({
             where: {
                 id: id
