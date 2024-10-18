@@ -6,7 +6,7 @@
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 type IconProps = React.SVGProps<SVGSVGElement>;
@@ -39,6 +39,7 @@ export function Register() {
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
   const [passwordsMatch, setPasswordMatch] = useState(false);
+  const navigate = useNavigate();
 
   // IMPLEMENTERA LOGIK FÖR ATT FÖRHINDRA ATT KUNNA REGISTRERA INNAN LÖSENORD MATCHAR
   function setAndComparePassword(newPW: string): void {
@@ -50,7 +51,6 @@ export function Register() {
 
   function submitToDatabase(e: React.FormEvent) {
     e.preventDefault();
-
     fetch("http://localhost:1337/users/", {
       method: "POST",
       headers: {
@@ -64,7 +64,10 @@ export function Register() {
       }),
     })
       .then((res) => res.json())
-      .then((data) => console.log(data))
+      .then((data) => {
+        console.log(data);
+        navigate("/login")
+      })
       .catch((error) => console.log(error));
   }
 
