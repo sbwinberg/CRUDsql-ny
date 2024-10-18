@@ -1,6 +1,6 @@
 import { Routes, Route } from 'react-router-dom'
 import { LoginPage } from './routes/login/LoginPage'
-import { Register } from './components/component/register'
+import { Register } from './components/register'
 import { CreateEmail } from './routes/emails/CreateEmail'
 // import CreateCampaign from './routes/Create-Campaign'
 // import { SpecificCampaign } from './components/specific-campaign'

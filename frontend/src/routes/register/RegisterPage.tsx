@@ -1,4 +1,4 @@
-import { Register } from "@/components/component/register";
+import { Register } from "@/components/register";
 
 export function RegisterPage() {
     <main className="flex justify-center items-center">

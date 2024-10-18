@@ -1,4 +1,4 @@
-import { Home } from "@/components/component/home"
+import { Home } from "@/components/home"
 
 export const LandingPage = () => {
     return(
