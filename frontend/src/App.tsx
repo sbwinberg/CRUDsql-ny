@@ -1,5 +1,5 @@
 import { Routes, Route } from 'react-router-dom'
-import Login from './routes/Login'
+import { LoginPage } from './routes/LoginPage'
 import { Register } from './components/component/register'
 import { CreateEmail } from './routes/CreateEmail'
 // import CreateCampaign from './routes/Create-Campaign'
@@ -16,7 +16,7 @@ function App() {
       <Routes>
         <Route element={<Layout />}>
           <Route path='/' element={<Homepage />} />
-          <Route path="/login" element={<Login />} />
+          <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<Register />} />
           <Route path="/campaign" element={<CampaignPage />} />
           <Route path="/create-email" element={<CreateEmail />} />
