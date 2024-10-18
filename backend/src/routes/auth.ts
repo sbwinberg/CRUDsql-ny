@@ -52,12 +52,12 @@ app.post("/login", passport.authenticate('local'), (req: Request, res: Response)
   }
 });
 
-app.get('/profile', (req, res) => {
-    if (!req.isAuthenticated()) {
-        return res.redirect('/login');
-    }
-    res.json(req.user);
-})
+app.get("/profile", (req, res) => {
+  if (!req.isAuthenticated()) {
+    return res.redirect("/login");
+  }
+  res.json(req.user);
+});
 
 // ---------------------------------------------------------------------------
 // Utloggningsrutt
