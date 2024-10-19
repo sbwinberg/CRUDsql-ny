@@ -30,10 +30,10 @@ export function CampaignsPageComponent() {
   const [campaigns, setCampaigns] = useState<Campaign[]>([]);
   const [showForm, setShowForm] = useState(false);
   const [formData, setFormData] = useState({
-    companyName: "",
-    companyDescription: "",
-    productDescription: "",
-    targetAudience: "",
+    companyName: " ",
+    companyDescription: " ",
+    productDescription: " ",
+    targetAudience: " ",
   });
 
   const handleInputChange = (

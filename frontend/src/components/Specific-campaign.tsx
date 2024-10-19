@@ -8,7 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-
+import { Loader2 } from "lucide-react";
 // mina importer
 import { Campaign } from "./campaigns-page";
 import { useParams } from "react-router-dom";
@@ -18,6 +18,7 @@ import axios from "axios";
 export function SpecificCampaign() {
   const [campaign, setCampaign] = useState<Campaign | null>(null);
   const { id } = useParams<{ id: string }>();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchCampaignDetails = async () => {
@@ -28,28 +29,40 @@ export function SpecificCampaign() {
         setCampaign(response.data);
       } catch (error) {
         console.error("Fel vid hämtning av kampanjdetaljer:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchCampaignDetails();
   }, [id]);
 
-  if (!campaign) return <div>Laddar...</div>;
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <Loader2 className="w-10 h-10 animate-spin text-blue-500" />
+      </div>
+    );
+  }
+
+  if (!campaign) {
+    return <div className="text-center mt-10">Kampanj hittades inte</div>;
+  }
 
   return (
     <div className="max-w-3xl mx-auto p-4">
       <header className="bg-black text-white p-4 rounded-md">
         <h1 className="text-2xl font-bold">{campaign.companyName}</h1>
         <p className="mt-2">
-          <strong>Company:</strong>
+          <strong>Company: </strong>
           {campaign.companyDescription}
         </p>
         <p>
-          <strong>Product:</strong>
+          <strong>Product: </strong>
           {campaign.productDescription}
         </p>
         <p>
-          <strong>Target Audience:</strong>
+          <strong>Target Audience: </strong>
           {campaign.targetAudience}
         </p>
       </header>
