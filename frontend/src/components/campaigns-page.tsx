@@ -1,23 +1,23 @@
-"'use client'"
-import { useState, useEffect } from "react"
-import { useNavigate } from "react-router-dom"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import { PlusCircle, Calendar, Mail } from "lucide-react"
+"'use client'";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { PlusCircle, Calendar, Mail } from "lucide-react";
 import axios from "axios";
-import { todaysDate } from "@/utils/todaysDate"
+import { todaysDate } from "@/utils/todaysDate";
 
-interface Campaign {
-  companyName: string
-  companyDescription: string
-  createdAt: string
-  id: string
-  productDescription: string
-  targetAudience: string
-  userId: string 
- // emails: [string] // detta ska va med men fattar inte ens grejen med emails
+export interface Campaign {
+  companyName: string;
+  companyDescription: string;
+  productDescription: string;
+  targetAudience: string;
+  id: string;
+  userId: string;
+  createdAt: string;
+  // emails: [string] // detta ska va med men fattar inte ens grejen med emails
 }
 
 export function CampaignsPageComponent() {
@@ -33,14 +33,16 @@ export function CampaignsPageComponent() {
     companyName: "",
     companyDescription: "",
     productDescription: "",
-    targetAudience: ""
+    targetAudience: "",
   });
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { id, value } = e.target;
-    setFormData(prevData => ({
+    setFormData((prevData) => ({
       ...prevData,
-      [id]: value
+      [id]: value,
     }));
   };
 
@@ -51,7 +53,7 @@ export function CampaignsPageComponent() {
         ...formData,
         createdAtDate: todaysDate,
         userId: "32459cc8-a06a-47a4-8133-af0ec0cfa609", // test hårdkodad userId ska fixas med autenticering
-        emails: [] // oklart hur emails ens ska fungera?
+        emails: [], // oklart hur emails ens ska fungera?
       });
       console.log("Kampanj skapad:", response.data);
       setShowForm(false);
@@ -64,13 +66,13 @@ export function CampaignsPageComponent() {
   useEffect(() => {
     const fetchCampaigns = async () => {
       try {
-        const response = await axios.get("http://localhost:1337/campaign")
-        setCampaigns(response.data)
-        console.log(campaigns, "campaigns")
+        const response = await axios.get("http://localhost:1337/campaign");
+        setCampaigns(response.data);
+        console.log(campaigns, "campaigns");
       } catch (error) {
-        console.error("Fel vid hämtning av kampanjer:", error)
+        console.error("Fel vid hämtning av kampanjer:", error);
       }
-    }
+    };
     fetchCampaigns();
   }, [showForm]);
 
@@ -89,14 +91,19 @@ export function CampaignsPageComponent() {
               <CardTitle>{campaign.companyName}</CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-sm text-zinc-500 mb-2 dark:text-zinc-400">{campaign.companyDescription}</p>
+              <p className="text-sm text-zinc-500 mb-2 dark:text-zinc-400">
+                {campaign.companyDescription}
+              </p>
               <div className="flex items-center text-sm text-zinc-500 dark:text-zinc-400">
                 <Calendar className="mr-2 h-4 w-4" />
-                <span>Skapad {new Date(campaign.createdAt).toLocaleDateString("sv-SE")}</span>
+                <span>
+                  Skapad{" "}
+                  {new Date(campaign.createdAt).toLocaleDateString("sv-SE")}
+                </span>
               </div>
               <div className="flex items-center text-sm text-zinc-500 mt-1 dark:text-zinc-400">
                 <Mail className="mr-2 h-4 w-4" />
-               {/*  <span>{campaign.emails.length} generated emails</span> */}
+                {/*  <span>{campaign.emails.length} generated emails</span> */}
               </div>
             </CardContent>
           </Card>
@@ -111,7 +118,10 @@ export function CampaignsPageComponent() {
           <CardContent>
             <form className="space-y-4" onSubmit={handleSubmit}>
               <div>
-                <label htmlFor="companyName" className="block text-sm font-medium text-zinc-500 mb-1 dark:text-zinc-400">
+                <label
+                  htmlFor="companyName"
+                  className="block text-sm font-medium text-zinc-500 mb-1 dark:text-zinc-400"
+                >
                   Company name
                 </label>
                 <Input
@@ -122,7 +132,10 @@ export function CampaignsPageComponent() {
                 />
               </div>
               <div>
-                <label htmlFor="companyDescription" className="block text-sm font-medium text-zinc-500 mb-1 dark:text-zinc-400">
+                <label
+                  htmlFor="companyDescription"
+                  className="block text-sm font-medium text-zinc-500 mb-1 dark:text-zinc-400"
+                >
                   Company description
                 </label>
                 <Textarea
@@ -133,7 +146,10 @@ export function CampaignsPageComponent() {
                 />
               </div>
               <div>
-                <label htmlFor="productDescription" className="block text-sm font-medium text-zinc-500 mb-1 dark:text-zinc-400">
+                <label
+                  htmlFor="productDescription"
+                  className="block text-sm font-medium text-zinc-500 mb-1 dark:text-zinc-400"
+                >
                   Product description
                 </label>
                 <Textarea
@@ -144,7 +160,10 @@ export function CampaignsPageComponent() {
                 />
               </div>
               <div>
-                <label htmlFor="targetAudience" className="block text-sm font-medium text-zinc-500 mb-1 dark:text-zinc-400">
+                <label
+                  htmlFor="targetAudience"
+                  className="block text-sm font-medium text-zinc-500 mb-1 dark:text-zinc-400"
+                >
                   Target audience
                 </label>
                 <Input
@@ -160,7 +179,7 @@ export function CampaignsPageComponent() {
         </Card>
       )}
     </div>
-  )
+  );
 }
 
 export default CampaignsPageComponent;
