@@ -21,21 +21,32 @@ export function Home() {
                 </p>
               </div>
               <div className="flex flex-col gap-2 min-[400px]:flex-row">
-                <Link
+                {!isLoggedIn &&  <>
+                  <Link
                   to="/register"
                   className="inline-flex h-10 items-center justify-center rounded-md bg-primary px-8 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
-                >
-                  Registrera dig
-                </Link>
-                <Link
-                  to="/login"
-                  className="inline-flex h-10 items-center justify-center rounded-md border border-input bg-background px-8 text-sm font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
-                >
-                  {/* GÖR EN NY KOMPONENT FÖR LOGGA UT-KNAPP OCH FIXA FUNKTION SOM ÄNDRAR STATE OCH RENSAR STORAGE */}
-                  {/* VISA ENDAST CAMPAIGN OCH LOG OUT NÄR MAN ÄR INLOGGAD */}
-                  {/* VISA ENDAST REGISTRERA OCH LOG IN NÄR MAN ÄR UTLOGGAD */}
-                  {isLoggedIn ? 'Logga ut' : 'Logga in'}
-                </Link>
+                  >
+                    Registrera dig
+                  </Link>
+                  <Link
+                    to="/login"
+                    className="inline-flex h-10 items-center justify-center rounded-md border border-input bg-background px-8 text-sm font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
+                  >
+                    {/* GÖR EN NY KOMPONENT FÖR LOGGA UT-KNAPP OCH FIXA FUNKTION SOM ÄNDRAR STATE OCH RENSAR STORAGE */}
+                    {/* VISA ENDAST CAMPAIGN OCH LOG OUT NÄR MAN ÄR INLOGGAD */}
+                    {/* VISA ENDAST REGISTRERA OCH LOG IN NÄR MAN ÄR UTLOGGAD */}
+                    Logga in
+                  </Link>
+                </>
+                }
+                {isLoggedIn && <>
+                  <Link
+                    to="/campaigns"
+                    className="inline-flex h-10 items-center justify-center rounded-md bg-primary px-8 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
+                  >
+                    Kampanjer
+                  </Link>
+                </>}
               </div>
             </div>
             <img

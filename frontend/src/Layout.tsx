@@ -6,7 +6,7 @@ import { AuthContext } from './context/context';
 
 const Layout = () => {
     const { isLoggedIn } = useContext(AuthContext)as { isLoggedIn: boolean };
-    
+
     return (
         <div className="layout">
             <header style={{ backgroundColor: '#3498db', color: 'white', padding: '1rem' }}>
@@ -16,24 +16,34 @@ const Layout = () => {
                         <span className="text-lg font-semibold">Gbg Marketing</span>
                     </Link>
                     <div className="flex items-center gap-4">
-                        <Link
-                            to="/login"
-                            className="text-sm font-medium hover:underline underline-offset-4"
+                        {!isLoggedIn && <>
+                            <Link
+                                to="/login"
+                                className="text-sm font-medium hover:underline underline-offset-4"
+                                >
+                                Logga in
+                            </Link>
+                            <Link
+                                to="/register"
+                                className="inline-flex h-9 items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
                             >
-                            {isLoggedIn ? 'Logga ut' : 'Logga in'}
-                        </Link>
-                        <Link
-                            to="/register"
-                            className="inline-flex h-9 items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
-                        >
-                            Registrera
-                        </Link>
-                        <Link
-                            to="/campaign"
-                            className="inline-flex h-9 items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
-                        >
+                                Registrera
+                            </Link>
+                        </>}
+                        {isLoggedIn && <>
+                            <Link
+                                to="/campaign"
+                                className="inline-flex h-9 items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
+                            >
                             Campaigns
-                        </Link>
+                            </Link>
+                            <Link
+                                to="/logout"
+                                className="inline-flex h-9 items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
+                            >
+                                Logga ut
+                            </Link>
+                        </>}
                     </div>
                 </div>
             </header>
